@@ -64,13 +64,11 @@ and Canny edge detections. Sobel detection relies on the first derivative,
 Laplacian relies on the second derivative, and Canny edge detection is by 
 intensity gradient.
 
-THIS IS NOT WORKING
 """
-#img = cv2.imread('messi5.jpg',0)\
-imgGray = lumMat.astype(int)
-edges = cv2.Canny(imgGray,100,200)
 
-plt.subplot(121),plt.imshow(imgGray,cmap = 'gray')
+edges = cv2.Canny(img,10,200)
+
+plt.subplot(121),plt.imshow(img,cmap = 'gray')
 plt.title('Original Image'), plt.xticks([]), plt.yticks([])
 plt.subplot(122),plt.imshow(edges,cmap = 'gray')
 plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
