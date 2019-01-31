@@ -1,123 +1,135 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Adriana Stohn
-Jan 21 2019
-
-Retrieve: 
-    average color of an image, 
-    average exposure/brightness of an image ( luminance channel), 
-    number of edges for a given pixel value threshold (decision boundary of derivative)
-"""
-
 import cv2
-import numpy as np
 from matplotlib import pyplot as plt
 
-
-#Read Image
-img = cv2.imread('/Users/adrianastohn/Desktop/CRCHistoPhenotypes_2016_04_28/Detection/img1/img1.bmp')
-#Display Image
-plt.imshow(img)
-plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-plt.show()
-
-
-#Find average value of each color channel (RGB)
-redAvg = img[:,:,0].mean()
-greenAvg = img[:,:,1].mean()
-blueAvg = img[:,:,2].mean()
-
-#Display each color channel
-plt.imshow(img[:,:,0],cmap='gray')
-plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-plt.show()
-
-plt.imshow(img[:,:,1],cmap='gray')
-plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-plt.show()
-
-plt.imshow(img[:,:,2],cmap='gray')
-plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-plt.show()
+from skimage.feature import blob_dog, blob_log, blob_doh
+from skimage.color import rgb2gray
+from skimage.io import imread
+from math import sqrt
+from math import pow
+import matplotlib.pyplot as plt
 
 
-"""
-In RGB images, image "brightness" is calculated as luminance. The weights in the 
-luminance calculation are correlated to the photopic response of the eye, or how 
-strongly the human eye perceives each color.
-Luminance = (0.2126*R + 0.7152*G + 0.0722*B)
-"""
-#Luminance Calculation
-lumMat = 0.2126*img[:,:,0] + 0.7152*img[:,:,1] + 0.0722*img[:,:,2]
-plt.imshow(lumMat,cmap='gray')
-plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-plt.show()
+def ColorAvg():
+    image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
 
-lumAvg = 0.2126*redAvg + 0.7152*greenAvg + 0.0722*blueAvg
-
-
-
-"""
-The three most common types of edge detection algorithms are: Sobel, Laplacian, 
-and Canny edge detections. Sobel detection relies on the first derivative, 
-Laplacian relies on the second derivative, and Canny edge detection is by 
-intensity gradient.
-
-"""
-
-edges = cv2.Canny(img,10,200)
-
-plt.subplot(121),plt.imshow(img,cmap = 'gray')
-plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-plt.subplot(122),plt.imshow(edges,cmap = 'gray')
-plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-plt.show()
+    #Find average value of each color channel (RGB)
+    redAvg = image[:,:,0].mean()
+    greenAvg = image[:,:,1].mean()
+    blueAvg = image[:,:,2].mean()
+    
+    #Display each color channel
+    plt.imshow(image[:,:,0],cmap='gray')
+    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    plt.show()
+    
+    plt.imshow(image[:,:,1],cmap='gray')
+    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    plt.show()
+    
+    plt.imshow(image[:,:,2],cmap='gray')
+    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    plt.show()
+    
+    return redAvg,greenAvg,blueAvg
 
 
+def LumAvg():
+    """
+    In RGB images, image "brightness" is calculated as luminance. The weights in the 
+    luminance calculation are correlated to the photopic response of the eye, or how 
+    strongly the human eye perceives each color.
+    Luminance = (0.2126*R + 0.7152*G + 0.0722*B)
+    """
+    image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
+    
+    redAvg = image[:,:,0].mean()
+    greenAvg = image[:,:,1].mean()
+    blueAvg = image[:,:,2].mean()
+    
+    #Luminance Calculation
+    lumMat = 0.2126*image[:,:,0] + 0.7152*image[:,:,1] + 0.0722*image[:,:,2]
+    plt.imshow(lumMat,cmap='gray')
+    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    plt.show()
+    
+    lumAvg = 0.2126*redAvg + 0.7152*greenAvg + 0.0722*blueAvg
+
+    return lumAvg
 
 
-"""
-The Blob detection that is NOT WORKING
-"""
+def CannyEdgeDetect():
+    """
+    The three most common types of edge detection algorithms are: Sobel, Laplacian, 
+    and Canny edge detections. Sobel detection relies on the first derivative,
+    Laplacian relies on the second derivative, and Canny edge detection is by 
+    intensity gradient.    
+    """
+    image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
+    edges = cv2.Canny(image,10,200)
+    
+#    #Display edge detection
+#    plt.subplot(121),plt.imshow(img,cmap = 'gray')
+#    plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+#    plt.subplot(122),plt.imshow(edges,cmap = 'gray')
+#    plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
+#    plt.show()
 
-# Setup SimpleBlobDetector parameters.
-params = cv2.SimpleBlobDetector_Params()
- 
-# Change thresholds
-params.minThreshold = 10;
-params.maxThreshold = 200;
- 
-# Filter by Area.
-params.filterByArea = False
-params.minArea = 1500
- 
-# Filter by Circularity
-params.filterByCircularity = False
-params.minCircularity = 0.1
- 
-# Filter by Convexity
-params.filterByConvexity = False
-params.minConvexity = 0.87
- 
-# Filter by Inertia
-params.filterByInertia = False
-params.minInertiaRatio = 0.01
- 
-# Create a detector with the parameters
-ver = (cv2.__version__).split('.')
-if int(ver[0]) < 3 :
-    detector = cv2.SimpleBlobDetector(params)
-else : 
-    detector = cv2.SimpleBlobDetector_create(params)
+    return 
 
-#detector = cv2.SimpleBlobDetector()
-#
-#imgGray = lumMat.astype(int)    
-#
-#keypoints = detector.detect(imgGray)
-#im_with_keypoints = cv2.drawKeypoints(imgGray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#cv2.imshow("Keypoints",im_with_keypoints)
+def find_blob_feats():
+    image = imread('human_cells_dataset/IXMtest_A01_s2_w3A597237B-C3D7-43AE-8399-83E76DA1532D.tif')
+
+    #convert image to gray scale for analysis
+    image_gray = rgb2gray(image)
+
+    blobs_log = blob_log(image_gray, max_sigma=30, num_sigma=10, threshold=.001)
+
+    # Compute radii in the 3rd column.
+    blobs_log[:, 2] = blobs_log[:, 2] * sqrt(2)
+
+    blobs_dog = blob_dog(image_gray, max_sigma=30, threshold=.01)
+    blobs_dog[:, 2] = blobs_dog[:, 2] * sqrt(2)
+
+    blobs_doh = blob_doh(image_gray, max_sigma=30, threshold=.001)
+
+    blobs_list = [blobs_log, blobs_dog, blobs_doh]
+    colors = ['yellow', 'lime', 'red']
+    titles = ['Laplacian of Gaussian', 'Difference of Gaussian',
+            'Determinant of Hessian']
+    sequence = zip(blobs_list, colors, titles)
+
+    fig, axes = plt.subplots(1, 3, figsize=(9, 3), sharex=True, sharey=True)
+    ax = axes.ravel()
+
+    radii_squared = 0
+    sum_radii_squared = 0
+
+    #creates blobs to plot over image
+    for idx, (blobs, color, title) in enumerate(sequence):
+        ax[idx].set_title(title)
+        ax[idx].imshow(image, interpolation='nearest')
+        for blob in blobs:
+            y, x, r = blob
+            c = plt.Circle((x, y), r, color=color, linewidth=2, fill=False)
+            ax[idx].add_patch(c)
+            radii_squared = pow(r,2) #create running total of radii for computing avg area of features 
+            sum_radii_squared+= radii_squared
+        ax[idx].set_axis_off()
+
+    avg_area = sum_radii_squared / len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) #computation avg area of features (ingoring pi as it is a constant) units in pixels
+
+    #plots blobs on image
+    plt.tight_layout()
+    plt.show()
+
+    return blobs_list, avg_area
+
+# blobs_list, avg_area = find_blob_feats()
+total_features = len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) #FIXME: add Harris Laplace
+total_dog_features = len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) 
+print(total_features)
+print(total_dog_features)
+print(avg_area)
 
 
 

@@ -4,8 +4,7 @@ from skimage.io import imread
 from math import sqrt
 from math import pow
 import matplotlib.pyplot as plt
-import cv2
-import numpy as np
+
 
 def find_blob_feats():
     image = imread('human_cells_dataset/IXMtest_A01_s2_w3A597237B-C3D7-43AE-8399-83E76DA1532D.tif')
@@ -55,21 +54,6 @@ def find_blob_feats():
 
     return blobs_list, avg_area
 
-def find_corner_feat():
-    image = cv2.imread('human_cells_dataset/IXMtest_A01_s2_w3A597237B-C3D7-43AE-8399-83E76DA1532D.tif')
-
-    image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = np.float32(image_gray)
-    dst = cv2.cornerHarris(gray, 200, 3, 0.04)
-    dst=cv2.dilate(dst, None)
-
-    image[dst>0.01*dst.max()] = [0,0,255]
-
-    print(dst)
-
-    cv2.imshow('dst', image)
-
-find_corner_feat()
 # blobs_list, avg_area = find_blob_feats()
 total_features = len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) #FIXME: add Harris Laplace
 total_dog_features = len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) 
