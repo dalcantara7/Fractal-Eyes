@@ -1,6 +1,5 @@
 import cv2
 from matplotlib import pyplot as plt
-
 from skimage.feature import blob_dog, blob_log, blob_doh
 from skimage.color import rgb2gray
 from skimage.io import imread
@@ -9,7 +8,7 @@ from math import pow
 import matplotlib.pyplot as plt
 
 
-def ColorAvg():
+def color_avg():
     image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
 
     #Find average value of each color channel (RGB)
@@ -33,7 +32,7 @@ def ColorAvg():
     return redAvg,greenAvg,blueAvg
 
 
-def LumAvg():
+def lum_avg():
     """
     In RGB images, image "brightness" is calculated as luminance. The weights in the 
     luminance calculation are correlated to the photopic response of the eye, or how 
@@ -57,7 +56,7 @@ def LumAvg():
     return lumAvg
 
 
-def CannyEdgeDetect():
+def canny_edge_detect():
     """
     The three most common types of edge detection algorithms are: Sobel, Laplacian, 
     and Canny edge detections. Sobel detection relies on the first derivative,
@@ -120,20 +119,6 @@ def find_blob_feats():
 
     #plots blobs on image
     plt.tight_layout()
-    plt.show()
+    # plt.show() //FIXME: send plots to GUI
 
     return blobs_list, avg_area
-
-# blobs_list, avg_area = find_blob_feats()
-total_features = len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) #FIXME: add Harris Laplace
-total_dog_features = len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) 
-print(total_features)
-print(total_dog_features)
-print(avg_area)
-
-
-
-
-
-
-
