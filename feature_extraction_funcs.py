@@ -8,8 +8,8 @@ from math import pow
 import matplotlib.pyplot as plt
 
 
-def color_avg():
-    image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
+def color_avg(filename):
+    image = cv2.imread(filename)
 
     #Find average value of each color channel (RGB)
     redAvg = image[:,:,0].mean()
@@ -32,14 +32,14 @@ def color_avg():
     return redAvg,greenAvg,blueAvg
 
 
-def lum_avg():
+def lum_avg(filename):
     """
     In RGB images, image "brightness" is calculated as luminance. The weights in the 
     luminance calculation are correlated to the photopic response of the eye, or how 
     strongly the human eye perceives each color.
     Luminance = (0.2126*R + 0.7152*G + 0.0722*B)
     """
-    image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
+    image = cv2.imread(filename)
     
     redAvg = image[:,:,0].mean()
     greenAvg = image[:,:,1].mean()
@@ -56,14 +56,14 @@ def lum_avg():
     return lumAvg
 
 
-def canny_edge_detect():
+def canny_edge_detect(filename):
     """
     The three most common types of edge detection algorithms are: Sobel, Laplacian, 
     and Canny edge detections. Sobel detection relies on the first derivative,
     Laplacian relies on the second derivative, and Canny edge detection is by 
     intensity gradient.    
     """
-    image = cv2.imread('master_white_blood_cell/JPEGImages/BloodImage_00000.jpg')
+    image = cv2.imread(filename)
     edges = cv2.Canny(image,10,200)
     
 #    #Display edge detection
@@ -75,8 +75,8 @@ def canny_edge_detect():
 
     return 
 
-def find_blob_feats():
-    image = imread('human_cells_dataset/IXMtest_A01_s2_w3A597237B-C3D7-43AE-8399-83E76DA1532D.tif')
+def find_blob_feats(filename):
+    image = imread(filename)
 
     #convert image to gray scale for analysis
     image_gray = rgb2gray(image)
