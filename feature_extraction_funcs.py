@@ -16,18 +16,18 @@ def color_avg(filename):
     greenAvg = image[:,:,1].mean()
     blueAvg = image[:,:,2].mean()
     
-    #Display each color channel
-    plt.imshow(image[:,:,0],cmap='gray')
-    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-    plt.show()
+    # #Display each color channel
+    # plt.imshow(image[:,:,0],cmap='gray')
+    # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    # plt.show()
     
-    plt.imshow(image[:,:,1],cmap='gray')
-    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-    plt.show()
+    # plt.imshow(image[:,:,1],cmap='gray')
+    # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    # plt.show()
     
-    plt.imshow(image[:,:,2],cmap='gray')
-    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-    plt.show()
+    # plt.imshow(image[:,:,2],cmap='gray')
+    # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    # plt.show()
     
     return redAvg,greenAvg,blueAvg
 
@@ -47,9 +47,9 @@ def lum_avg(filename):
     
     #Luminance Calculation
     lumMat = 0.2126*image[:,:,0] + 0.7152*image[:,:,1] + 0.0722*image[:,:,2]
-    plt.imshow(lumMat,cmap='gray')
-    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-    plt.show()
+    # plt.imshow(lumMat,cmap='gray')
+    # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+    # plt.show()
     
     lumAvg = 0.2126*redAvg + 0.7152*greenAvg + 0.0722*blueAvg
 
@@ -75,7 +75,7 @@ def canny_edge_detect(filename):
 
     return 
 
-def find_blob_feats(filename):
+def find_blob_feats(filename): #FIXME: adjust parameters for white blood cell and black cell
     image = imread(filename)
 
     #convert image to gray scale for analysis
@@ -118,7 +118,7 @@ def find_blob_feats(filename):
     avg_area = sum_radii_squared / len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2]) #computation avg area of features (ingoring pi as it is a constant) units in pixels
 
     #plots blobs on image
-    plt.tight_layout()
+    # plt.tight_layout()
     # plt.show() //FIXME: send plots to GUI
 
     return blobs_list, avg_area
