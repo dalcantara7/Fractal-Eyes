@@ -19,6 +19,9 @@ def all_image_analysis():
         avg_area_list.append(avg_area)
         avg_color_list.append(avg_color)
         lum_avg_list.append(lum_avg)
+        
+        labels = np.zeros(730)
+        
         # edges_list.append(edges)
 
     for i in range(0, 365):
@@ -34,7 +37,18 @@ def all_image_analysis():
         avg_color_list.append(avg_color)
         lum_avg_list.append(lum_avg)
         # edges_list.append(edges)
-
+    
+    for y in range (366, 730):
+        
+        labels[y] = 1
+        
+    
+    num_blobs_list = np.asarray(num_blobs_list)
+    avg_area_list = np.asarray(avg_area_list)
+    avg_color_list = np.asarray(avg_color_list)
+    lum_avg_list = np.asarray(lum_avg)
+    
+    numpy_array_features = np.column_stack((num_blobs_list,avg_area_list,avg_color_list,lum_avg_list,labels))
     #set up numpy array
 
     #plotting of data
