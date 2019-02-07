@@ -1,7 +1,7 @@
 import feature_extraction_funcs as fe
 import numpy as np
 
-num_samples = 5
+num_samples = 20
 
 def all_image_analysis():
     num_blobs_list = []
@@ -47,15 +47,15 @@ def all_image_analysis():
     num_blobs_list = np.asarray(num_blobs_list)
     avg_area_list = np.asarray(avg_area_list)
     avg_color_list = np.asarray(avg_color_list)
-    lum_avg_list = np.asarray(lum_avg)
+    # lum_avg_list = np.asarray(lum_avg)
 
     print(len(labels))
     print(len(num_blobs_list))
     print(len(avg_area_list))
     print(len(avg_color_list))
-    print(len(lum_avg_list))
+    # print(len(lum_avg_list)) #FIXME: unsized object??
     
-    numpy_array_features = np.column_stack((num_blobs_list,avg_area_list,avg_color_list,lum_avg_list,labels))
+    numpy_array_features = np.column_stack((num_blobs_list,avg_area_list,avg_color_list,labels)) #FIXME: add lum_avg_list back in
     
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
     
