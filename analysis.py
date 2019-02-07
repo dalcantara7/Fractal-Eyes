@@ -1,7 +1,7 @@
 import feature_extraction_funcs as fe
 import numpy as np
 
-num_samples = 366
+num_samples = 5
 
 def all_image_analysis():
     num_blobs_list = []
@@ -40,14 +40,20 @@ def all_image_analysis():
         # edges_list.append(edges)
     
     #set up numpy array
-    labels = np.zeros(num_samples * 2) #all 732 samples
-    for y in range (num_samples, (num_samples * 2) - 1):
+    labels = np.zeros((num_samples - 1) * 2) #all 732 samples
+    for y in range (num_samples, (num_samples - 1) * 2):
         labels[y] = 1
     
     num_blobs_list = np.asarray(num_blobs_list)
     avg_area_list = np.asarray(avg_area_list)
     avg_color_list = np.asarray(avg_color_list)
     lum_avg_list = np.asarray(lum_avg)
+
+    print(len(labels))
+    print(len(num_blobs_list))
+    print(len(avg_area_list))
+    print(len(avg_color_list))
+    print(len(lum_avg_list))
     
     numpy_array_features = np.column_stack((num_blobs_list,avg_area_list,avg_color_list,lum_avg_list,labels))
     
