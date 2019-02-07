@@ -1,7 +1,7 @@
 import feature_extraction_funcs as fe
 import numpy as np
 
-
+num_samples = 366
 
 def all_image_analysis():
     num_blobs_list = []
@@ -10,7 +10,7 @@ def all_image_analysis():
     lum_avg_list = []
     edges_list = []
 
-    for i in range(0, 365):
+    for i in range(0, num_samples - 1):
         white_blood_cell_filename = "master_white_blood_cell/JPEGImages/" + str(i) + ".jpg"
         all_blob_feat, avg_area = fe.find_blob_feats(white_blood_cell_filename, False)
         num_blobs = len(all_blob_feat)
@@ -25,7 +25,7 @@ def all_image_analysis():
         
         # edges_list.append(edges)
 
-    for i in range(0, 365):
+    for i in range(0, num_samples - 1):
         human_cell_filename = "human_cell_dataset/" + str(i) + ".jpg"
         all_blob_feat, avg_area = fe.find_blob_feats(white_blood_cell_filename, True)
         num_blobs = len(all_blob_feat)
@@ -40,8 +40,8 @@ def all_image_analysis():
         # edges_list.append(edges)
     
     #set up numpy array
-    labels = np.zeros(732)
-    for y in range (366, 731):
+    labels = np.zeros(num_samples * 2) #all 732 samples
+    for y in range (num_samples, (num_samples * 2) - 1):
         labels[y] = 1
     
     num_blobs_list = np.asarray(num_blobs_list)
