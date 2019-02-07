@@ -2,6 +2,8 @@ import feature_extraction_funcs as fe
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.feature_selection import mutual_info_classif
 
 num_samples = 20
 
@@ -23,15 +25,14 @@ def all_image_analysis():
     #     avg_area_list.append(avg_area)
     #     avg_color_list.append(avg_color)
     #     lum_avg_list.append(lum_avg)
-        
     #     # edges_list.append(edges)
 
     # for i in range(0, num_samples):
     #     human_cell_filename = "human_cell_dataset/" + str(i) + ".jpg"
-    #     num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, True)
-    #     avg_color = fe.color_avg(white_blood_cell_filename)
-    #     lum_avg = fe.lum_avg(white_blood_cell_filename)
-    #     # edges = fe.canny_edge_detect(white_blood_cell_filename)
+    #     num_blobs, avg_area = fe.find_blob_feats(human_cell_filename, True)
+    #     avg_color = fe.color_avg(human_cell_filename)
+    #     lum_avg = fe.lum_avg(human_cell_filename)
+    #     # edges = fe.canny_edge_detect(human_cell_filename)
         
     #     num_blobs_list.append(num_blobs)
     #     avg_area_list.append(avg_area)
@@ -70,7 +71,9 @@ def all_image_analysis():
     
     print(data)
     plot = sns.pairplot(data, hue="class")
+    plt.show()
 
     #mutual information classification
+
 
 all_image_analysis()
