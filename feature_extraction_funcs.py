@@ -121,6 +121,7 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
     blobs_doh = blob_doh(image_gray, max_sigma=doh_max_sigma, threshold=doh_threshold, overlap=doh_overlap)
 
     blobs_list = [blobs_log, blobs_dog, blobs_doh]
+    num_blobs = len(blobs_log) + len(blobs_dog) + len(blobs_doh)
     colors = ['yellow', 'lime', 'red']
     titles = ['Laplacian of Gaussian', 'Difference of Gaussian',
             'Determinant of Hessian']
@@ -153,4 +154,4 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
     # plt.tight_layout()
     # plt.show() #FIXME: send plots to GUI
 
-    return blobs_list, avg_area
+    return num_blobs, avg_area
