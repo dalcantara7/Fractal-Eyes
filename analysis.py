@@ -6,52 +6,52 @@ import seaborn as sns
 num_samples = 20
 
 def all_image_analysis():
-    num_blobs_list = []
-    avg_area_list = []
-    avg_color_list = []
-    lum_avg_list = []
-    edges_list = []
+    # num_blobs_list = []
+    # avg_area_list = []
+    # avg_color_list = []
+    # lum_avg_list = []
+    # edges_list = []
 
-    for i in range(0, num_samples):
-        white_blood_cell_filename = "master_white_blood_cell/JPEGImages/" + str(i) + ".jpg"
-        num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, False)
-        avg_color = fe.color_avg(white_blood_cell_filename)
-        lum_avg = fe.lum_avg(white_blood_cell_filename)
-        # edges = fe.canny_edge_detect(white_blood_cell_filename)
+    # for i in range(0, num_samples):
+    #     white_blood_cell_filename = "master_white_blood_cell/JPEGImages/" + str(i) + ".jpg"
+    #     num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, False)
+    #     avg_color = fe.color_avg(white_blood_cell_filename)
+    #     lum_avg = fe.lum_avg(white_blood_cell_filename)
+    #     # edges = fe.canny_edge_detect(white_blood_cell_filename)
         
-        num_blobs_list.append(num_blobs)
-        avg_area_list.append(avg_area)
-        avg_color_list.append(avg_color)
-        lum_avg_list.append(lum_avg)
+    #     num_blobs_list.append(num_blobs)
+    #     avg_area_list.append(avg_area)
+    #     avg_color_list.append(avg_color)
+    #     lum_avg_list.append(lum_avg)
         
-        # edges_list.append(edges)
+    #     # edges_list.append(edges)
 
-    for i in range(0, num_samples):
-        human_cell_filename = "human_cell_dataset/" + str(i) + ".jpg"
-        num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, True)
-        avg_color = fe.color_avg(white_blood_cell_filename)
-        lum_avg = fe.lum_avg(white_blood_cell_filename)
-        # edges = fe.canny_edge_detect(white_blood_cell_filename)
+    # for i in range(0, num_samples):
+    #     human_cell_filename = "human_cell_dataset/" + str(i) + ".jpg"
+    #     num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, True)
+    #     avg_color = fe.color_avg(white_blood_cell_filename)
+    #     lum_avg = fe.lum_avg(white_blood_cell_filename)
+    #     # edges = fe.canny_edge_detect(white_blood_cell_filename)
         
-        num_blobs_list.append(num_blobs)
-        avg_area_list.append(avg_area)
-        avg_color_list.append(avg_color)
-        lum_avg_list.append(lum_avg)
-        # edges_list.append(edges)
+    #     num_blobs_list.append(num_blobs)
+    #     avg_area_list.append(avg_area)
+    #     avg_color_list.append(avg_color)
+    #     lum_avg_list.append(lum_avg)
+    #     # edges_list.append(edges)
     
-    #set up numpy array
-    labels = np.zeros((num_samples) * 2) #all 732 samples
-    for y in range (num_samples, (num_samples) * 2):
-        labels[y] = 1
+    # #set up numpy array
+    # labels = np.zeros((num_samples) * 2) #all 732 samples
+    # for y in range (num_samples, (num_samples) * 2):
+    #     labels[y] = 1
     
-    num_blobs_list = np.asarray(num_blobs_list)
-    avg_area_list = np.asarray(avg_area_list)
-    avg_color_list = np.asarray(avg_color_list)
-    lum_avg_list = np.asarray(lum_avg_list) 
+    # num_blobs_list = np.asarray(num_blobs_list)
+    # avg_area_list = np.asarray(avg_area_list)
+    # avg_color_list = np.asarray(avg_color_list)
+    # lum_avg_list = np.asarray(lum_avg_list) 
     
-    numpy_array_features = np.column_stack((num_blobs_list, avg_area_list, avg_color_list, lum_avg_list, labels))
+    # numpy_array_features = np.column_stack((num_blobs_list, avg_area_list, avg_color_list, lum_avg_list, labels))
     
-    np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
+    # np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
     
     #plotting of data
     data = np.genfromtxt("small_full_image_set_analysis.csv", delimiter=',')
