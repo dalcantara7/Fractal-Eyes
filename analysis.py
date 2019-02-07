@@ -1,6 +1,8 @@
 import feature_extraction_funcs as fe
 import numpy as np
 
+
+
 def all_image_analysis():
     num_blobs_list = []
     avg_area_list = []
@@ -10,7 +12,7 @@ def all_image_analysis():
 
     for i in range(0, 365):
         white_blood_cell_filename = "master_white_blood_cell/JPEGImages/" + str(i) + ".jpg"
-        all_blob_feat, avg_area = fe.find_blob_feats(white_blood_cell_filename)
+        all_blob_feat, avg_area = fe.find_blob_feats(white_blood_cell_filename, False)
         num_blobs = len(all_blob_feat)
         avg_color = fe.color_avg(white_blood_cell_filename)
         lum_avg = fe.lum_avg(white_blood_cell_filename)
@@ -25,7 +27,7 @@ def all_image_analysis():
 
     for i in range(0, 365):
         human_cell_filename = "human_cell_dataset/" + str(i) + ".jpg"
-        all_blob_feat, avg_area = fe.find_blob_feats(white_blood_cell_filename)
+        all_blob_feat, avg_area = fe.find_blob_feats(white_blood_cell_filename, True)
         num_blobs = len(all_blob_feat)
         avg_color = fe.color_avg(white_blood_cell_filename)
         lum_avg = fe.lum_avg(white_blood_cell_filename)
@@ -38,8 +40,8 @@ def all_image_analysis():
         # edges_list.append(edges)
     
     #set up numpy array
-    labels = np.zeros(730)
-    for y in range (366, 730):
+    labels = np.zeros(732)
+    for y in range (366, 731):
         labels[y] = 1
     
     num_blobs_list = np.asarray(num_blobs_list)
@@ -48,9 +50,8 @@ def all_image_analysis():
     lum_avg_list = np.asarray(lum_avg)
     
     numpy_array_features = np.column_stack((num_blobs_list,avg_area_list,avg_color_list,lum_avg_list,labels))
-    print(numpy_array_features)
-
-    #FIXME: export numpy array to csv for easy testing
+    
+    np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
     
     #plotting of data
 
