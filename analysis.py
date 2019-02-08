@@ -55,7 +55,7 @@ def all_image_analysis():
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
 def plot_data():
-    data = np.genfromtxt("small_full_image_set_analysis.csv", delimiter=',') #FIXME: change to 
+    data = np.genfromtxt("small_full_image_set_analysis.csv", delimiter=',') #FIXME: change to full_image_set_analysis.csv once testing is completed
     data = data.tolist()
     data = pd.DataFrame(data, index=None, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
 
