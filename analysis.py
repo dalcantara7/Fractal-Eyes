@@ -77,5 +77,5 @@ def mutual_information():
     pass
 
 
-all_image_analysis()
-# plot_data()
+# all_image_analysis()
+plot_data()
