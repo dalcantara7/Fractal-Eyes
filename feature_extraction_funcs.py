@@ -80,15 +80,15 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
     #values for white blood cells
     log_max_sigma = 50
     log_min_sigma = 5
-    log_threshold = 0.5
+    log_threshold = 0.049
     log_overlap = 0.1
     dog_max_sigma = 40
     dog_min_sigma = 0
-    dog_threshold = 0.8
+    dog_threshold = 0.09
     dog_overlap = 0.1
     doh_max_sigma = 55
     doh_min_sigma = 0
-    doh_threshold = 0.002
+    doh_threshold = 0.0002
     doh_overlap = 0
 
     if (black_cell):
@@ -152,6 +152,6 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
 
     #plots blobs on image
     # plt.tight_layout()
-    # plt.show() #FIXME: send plots to GUI
+    # plt.show() 
 
     return num_blobs, avg_area
