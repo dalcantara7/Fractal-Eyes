@@ -53,7 +53,8 @@ def mutualInformationFeatures(dataframe,featureName,labels):
    
     feature = data.loc[:, featureName]
     
-    data = dataframe.drop(columns = [featureName,labels])
+    #data = dataframe.drop(columns = [featureName,labels])
+    data = dataframe.drop(columns = labels)
   
     
     data = data.values
