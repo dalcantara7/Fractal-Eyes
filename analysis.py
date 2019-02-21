@@ -50,9 +50,10 @@ def all_image_analysis():
     
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
-def plot_data():
+def plot_data(class_label, image_data):
     data = np.genfromtxt("full_image_set_analysis.csv", delimiter=',') #FIXME: change to full_image_set_analysis.csv once testing is completed
     data = data.tolist()
+    data.append(image_data)
     data = pd.DataFrame(data, index=None, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
 
     vector = data.loc[:, 'Class']
@@ -63,23 +64,29 @@ def plot_data():
             new_vector.append('Black')
         elif i == 1:
             new_vector.append('Blood')
+        elif i == 2:
+            new_vector.append("Analyzed Image")
     data['Class'] = new_vector
-
-    #FIXME: class value of single image should be 2 for plotting to plot that point in a different color
     
     plot = sns.pairplot(data, hue="Class", palette="husl")
     plt.show()
 
-def mutual_information(dataframe,featureName,labels):    
+def mutual_information(dataframe, featureName, labels):    
     pass
 
 def single_image_analysis(filename):
     #FIXME: call neural network return class label
-    num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, False)
-    avg_color = fe.color_avg(white_blood_cell_filename)
-    lum_avg = fe.lum_avg(white_blood_cell_filename)
+    class_label = 1
+    if(class_label == 0):
+        num_blobs, avg_area = fe.find_blob_feats(filename, False)
+    else:
+        num_blobs, avg_area = fe.find_blob_feats(filename, True)
+    avg_color = fe.color_avg(filename)
+    lum_avg = fe.lum_avg(filename)
 
-    #FIXME: pass above values into plot_data() and compare with full image set analysis
+    data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 2] #two is passed in as the last argument so that plotting can highlight that as the image in the plots
+
+    plot_data(class_label, data_array) 
 
     #FIXME: call mutual information
     #FIXME: generate natural language explanation
@@ -88,3 +95,4 @@ def single_image_analysis(filename):
 # all_image_analysis()
 # plot_data()
 # mutual_information()
+single_image_analysis("human_cell_dataset/400.jpg")
