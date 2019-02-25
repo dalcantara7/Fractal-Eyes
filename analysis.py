@@ -90,12 +90,20 @@ def single_image_analysis(filename):
     dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
 
     mi_features_list = list()
+    feature_names = list(dataframe)
+    print(feature_names)
 
     mi_features_list = mi.mutualInformationScores(data)
-    for i in range(0,6):
+    mi_features_list = mi_features_list.tolist()
+    
+    for i in feature_names:
         mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
-
-    mi_features_matrix = np.column_stack(mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5])
+    
+    for j in range(len(mi_features_list)):
+        mi_features_list[j] = np.asarray(mi_features_list[j])
+        
+        
+    mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
 
     print(mi_features_list)
     print(mi_features_matrix)
@@ -112,4 +120,5 @@ def natural_language_explanation():
 # all_image_analysis()
 # plot_data()
 # mutual_information()
-single_image_analysis("human_cell_dataset/400.jpg")
+#single_image_analysis("human_cell_dataset/400.jpg")
+single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
