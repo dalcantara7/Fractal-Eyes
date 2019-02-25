@@ -86,8 +86,27 @@ def single_image_analysis(filename):
 
     plot_data(class_label, data_array) 
 
-    #FIXME: call mutual information
+    data = np.loadtxt("full_image_set_analysis.csv", delimiter = ',') 
+    dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
+
+    mi_features_list = list()
+
+    mi_features_list = mi.mutualInformationScores(data)
+    for i in range(0,6):
+        mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
+
+    mi_features_matrix = np.column_stack(mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5])
+
+    print(mi_features_list)
+    print(mi_features_matrix)
+
     #FIXME: generate natural language explanation
+
+def sort_mi():
+    pass
+
+def natural_language_explanation():
+    pass
 
 
 # all_image_analysis()
