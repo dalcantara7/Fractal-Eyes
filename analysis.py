@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import CNNPredicter as cnn
+import mutual_information as mi
 from sklearn.feature_selection import mutual_info_classif
 
 num_samples = 365
@@ -71,12 +73,8 @@ def plot_data(class_label, image_data):
     plot = sns.pairplot(data, hue="Class", palette="husl")
     plt.show()
 
-def mutual_information(dataframe, featureName, labels):    
-    pass
-
 def single_image_analysis(filename):
-    #FIXME: call neural network return class label
-    class_label = 1
+    class_label = cnn.predicter(filename)
     if(class_label == 0):
         num_blobs, avg_area = fe.find_blob_feats(filename, False)
     else:

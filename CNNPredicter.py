@@ -31,8 +31,5 @@ def predicter(filepath):
 
     prediction = model.predict_classes(image_test_array)
     
-    if (prediction == 0):
-        return 'BloodImage'
-    else:
-        return 'BlackImage'
+    return prediction
 
