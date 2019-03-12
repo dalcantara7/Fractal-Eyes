@@ -111,7 +111,14 @@ def single_image_analysis(filename):
     #FIXME: generate natural language explanation
 
 def sort_mi():
+    upValues = np.zeros(np.shape(mi_features_matrix))
+    upValues = np.argsort(mi_features_matrix)
+    downValues = upValues[::-1] 
+    
+    3most = mi_features_matrix[downValues[0:2]]
+    
     pass
+
 
 def natural_language_explanation():
     pass
