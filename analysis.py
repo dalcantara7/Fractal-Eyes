@@ -112,15 +112,21 @@ def single_image_analysis(filename):
 
 def sort_mi():
     upValues = np.zeros(np.shape(mi_features_matrix))
-    upValues = np.argsort(mi_features_matrix)
-    downValues = upValues[::-1] 
+    upValues = np.argsort(mi_features_matrix) #order indices of rising matrix values PER ROW
+    downValues = np.flip(upValues,axis = 1) #flip backwards to get indices of falling matrix values
     
-    3most = mi_features_matrix[downValues[0:2]]
+    rowSort = np.zeros((6,6))
+for n in range(6):
+    rowSort[n]= mat[n,downValues[n,:]] 
+    #creates matrix sorted by descending value per each row
     
-    pass
+    most3 = rowSort[:,0:3] #three biggest values in each row
 
 
 def natural_language_explanation():
+    
+    
+    
     pass
 
 
