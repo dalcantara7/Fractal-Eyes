@@ -124,7 +124,7 @@ for n in range(6):
 
 
 def natural_language_explanation():
-    
+    #NOT FINISHED
     
     
     pass
