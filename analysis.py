@@ -63,9 +63,9 @@ def plot_data(class_label, image_data):
     new_vector = list()
     for i in vector:
         if i == 0:
-            new_vector.append('Black')
+            new_vector.append('White Blood')
         elif i == 1:
-            new_vector.append('Blood')
+            new_vector.append('U2OS')
         elif i == 2:
             new_vector.append("Analyzed Image")
     data['Class'] = new_vector
