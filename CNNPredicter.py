@@ -31,5 +31,35 @@ def predicter(filepath):
 
     prediction = model.predict_classes(image_test_array)
     
-    return prediction
+    if (prediction == 0):
+        return 'BloodImage'
+    else:
+        return 'BlackImage'
+
+"""
+This filepath instead uses a .jpeg instead of .jpg make sure to check test image file extension
+before using either of these functions
+"""
+
+def predicter2(filepath):
+    
+    model = load_model('MultiClass.model')
+    image_test = (load_img(filepath, target_size = (200,200)))
+    image_test_array = img_to_array(image_test)
+    image_test_array = np.expand_dims(image_test_array, axis=0)
+    
+    
+    prediction = model.predict_classes(image_test_array)
+    
+    if(prediction == 0):
+        return 'Eosinophil'
+    elif(prediction == 1):
+        return 'Lymphocyte'
+    elif(prediction == 2):
+        return 'Monocyte'
+    elif(prediction == 3):
+        return 'Neutrophil'
+    
+    
+#test1 = predicter2(r'C:\Users\andre\Desktop\498B\498Bdata2\Validation\NEUTROPHIL\_0_2399.jpeg')
 
