@@ -53,27 +53,6 @@ def all_image_analysis():
     
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
-def plot_data(class_label, image_data):
-    data = np.genfromtxt("full_image_set_analysis.csv", delimiter=',')
-    data = data.tolist()
-    data.append(image_data)
-    data = pd.DataFrame(data, index=None, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
-
-    vector = data.loc[:, 'Class']
-    vector = vector.tolist()
-    new_vector = list()
-    for i in vector:
-        if i == 0:
-            new_vector.append('White Blood')
-        elif i == 1:
-            new_vector.append('U2OS')
-        elif i == 2:
-            new_vector.append("Analyzed Image")
-    data['Class'] = new_vector
-    
-    plot = sns.pairplot(data, hue="Class", palette="husl")
-    plt.show()
-
 def single_image_analysis(filename):
     class_label = cnn.predicter(filename)
     if(class_label == 0):
@@ -84,8 +63,9 @@ def single_image_analysis(filename):
     lum_avg = fe.lum_avg(filename)
 
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 2] #two is passed in as the last argument so that plotting can highlight that as the image in the plots
-
-    plot_data(class_label, data_array) 
+    
+    #plotting of data
+    # pp.indiv_pair_plot(data_array)
 
     data = np.loadtxt("full_image_set_analysis.csv", delimiter = ',') 
     dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
