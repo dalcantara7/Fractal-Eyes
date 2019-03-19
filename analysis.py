@@ -65,7 +65,7 @@ def single_image_analysis(filename):
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 2] #two is passed in as the last argument so that plotting can highlight that as the image in the plots
     
     #plotting of data
-    # pp.indiv_pair_plot(data_array)
+    pp.indiv_pair_plot(data_array)
 
     data = np.loadtxt("full_image_set_analysis.csv", delimiter = ',') 
     dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
