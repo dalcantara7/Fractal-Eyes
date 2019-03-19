@@ -1,4 +1,5 @@
 import feature_extraction_funcs as fe
+import indiv_pair_plot as pp
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -53,7 +54,7 @@ def all_image_analysis():
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
 def plot_data(class_label, image_data):
-    data = np.genfromtxt("full_image_set_analysis.csv", delimiter=',') #FIXME: change to full_image_set_analysis.csv once testing is completed
+    data = np.genfromtxt("full_image_set_analysis.csv", delimiter=',')
     data = data.tolist()
     data.append(image_data)
     data = pd.DataFrame(data, index=None, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
