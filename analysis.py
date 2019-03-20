@@ -79,14 +79,14 @@ def single_image_analysis(filename):
     top_n_features = sort_mi(mi_features_list, 5)
     print(top_n_features)
 
-    # for i in feature_names:
-    #     mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
+    for i in feature_names:
+        mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
     
-    # for j in range(len(mi_features_list)):
-    #     mi_features_list[j] = np.asarray(mi_features_list[j])
+    for j in range(len(mi_features_list)):
+        mi_features_list[j] = np.asarray(mi_features_list[j])
         
-    # mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
-    # sort_mi_feats(mi_features_matrix)
+    mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
+    sort_mi_feats(mi_features_matrix)
 
     #FIXME: generate natural language explanation
 
@@ -95,18 +95,23 @@ def sort_mi(mi_matrix, n):
 
     return top_n
 
+def takeSecond(elem):
+    return elem[1]
+
 def sort_mi_feats(mi_features_matrix):
-    pass
-#     upValues = np.zeros(np.shape(mi_features_matrix))
-#     upValues = np.argsort(mi_features_matrix) #order indices of rising matrix values PER ROW
-#     downValues = np.flip(upValues,axis = 1) #flip backwards to get indices of falling matrix values
-    
-#     rowSort = np.zeros((6,6))
-# for n in range(6):
-#     rowSort[n]= mat[n,downValues[n,:]] 
-#     #creates matrix sorted by descending value per each row
-    
-#     most3 = rowSort[:,0:3] #three biggest values in each row
+    data = np.loadtxt('Mutual_Information_Features.csv', delimiter = ',') #FIXME: change to use mi_features_matrix
+    dims = data.shape
+    triUp = np.triu(data)
+
+    dataTri = [index for index in np.ndenumerate(triUp)]
+
+    noDiag = []
+    for i in range(len(dataTri)):
+        if (dataTri[i][0][0] != dataTri[i][0][1]):
+                noDiag.append(dataTri[i])
+
+    ascendVals = sorted(noDiag, key = takeSecond)
+    descendVals = ascendVals[::-1] #First n values are n biggest
 
 def natural_language_explanation():
     pass
