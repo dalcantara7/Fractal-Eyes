@@ -37,7 +37,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+1])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 + 1) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 + 1) + '_' + str(i + 1) + '.png')
 
     for i in range (0,4):
         plt.figure()
@@ -45,7 +45,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+2])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 + 2) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 + 2) + '_' + str(i + 1) + '.png')
 
     for i in range (0,3):
         plt.figure()
@@ -53,7 +53,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+3])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 + 3) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 + 3) + '_' + str(i + 1) + '.png')
 
     for i in range (0,2):
         plt.figure()
@@ -61,7 +61,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+4])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 + 4) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 + 4) + '_' + str(i + 1) + '.png')
 
     for i in range (0,1):
         plt.figure()
@@ -69,7 +69,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+5])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 + 5) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 + 5) + '_' + str(i + 1) + '.png')
 
     # # diagonal immediately above histograms
     for i in range(1,6):
@@ -78,7 +78,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-1])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 - 1) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 - 1) + '_' + str(i + 1) + '.png')
 
     for i in range (2,6):
         plt.figure()
@@ -86,7 +86,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-2])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 - 2) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 - 2) + '_' + str(i + 1) + '.png')
 
     for i in range (3,6):
         plt.figure()
@@ -94,7 +94,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-3])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 - 3) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 - 3) + '_' + str(i + 1) + '.png')
 
     for i in range (4,6):
         plt.figure()    
@@ -102,7 +102,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-4])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 - 4) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 - 4) + '_' + str(i + 1) + '.png')
 
     for i in range (5,6):
         plt.figure()
@@ -110,4 +110,4 @@ def indiv_pair_plot(analyzed_image_data):
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-5])
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
-        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1 - 5) + '.png')
+        plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
