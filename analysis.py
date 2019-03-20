@@ -76,7 +76,7 @@ def single_image_analysis(filename):
     mi_features_list = mi.mutualInformationScores(data)
     mi_features_list = mi_features_list.tolist()
 
-    top_n_features = sort_mi([5,3,1,4,10], 5)
+    top_n_features = sort_mi(mi_features_list, 5)
     print(top_n_features)
 
     # for i in feature_names:
