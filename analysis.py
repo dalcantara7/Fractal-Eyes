@@ -71,48 +71,49 @@ def single_image_analysis(filename):
     dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
 
     mi_features_list = list()
-    feature_names = list(dataframe)
-    print(feature_names)
+    feature_names = list(data)
 
     mi_features_list = mi.mutualInformationScores(data)
     mi_features_list = mi_features_list.tolist()
-    
-    for i in feature_names:
-        mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
-    
-    for j in range(len(mi_features_list)):
-        mi_features_list[j] = np.asarray(mi_features_list[j])
-        
-        
-    mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
 
-    print(mi_features_list)
-    print(mi_features_matrix)
+    top_n_features = sort_mi([5,3,1,4,10], 5)
+    print(top_n_features)
+
+    # for i in feature_names:
+    #     mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
+    
+    # for j in range(len(mi_features_list)):
+    #     mi_features_list[j] = np.asarray(mi_features_list[j])
+        
+    # mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
+    # sort_mi_feats(mi_features_matrix)
 
     #FIXME: generate natural language explanation
 
-def sort_mi():
-    upValues = np.zeros(np.shape(mi_features_matrix))
-    upValues = np.argsort(mi_features_matrix) #order indices of rising matrix values PER ROW
-    downValues = np.flip(upValues,axis = 1) #flip backwards to get indices of falling matrix values
-    
-    rowSort = np.zeros((6,6))
-for n in range(6):
-    rowSort[n]= mat[n,downValues[n,:]] 
-    #creates matrix sorted by descending value per each row
-    
-    most3 = rowSort[:,0:3] #three biggest values in each row
+def sort_mi(mi_matrix, n):
+    top_n = sorted(range(len(mi_matrix)), key=lambda i: mi_matrix[i], reverse=True)[:int(n)]
 
+    return top_n
+
+def sort_mi_feats(mi_features_matrix):
+    pass
+#     upValues = np.zeros(np.shape(mi_features_matrix))
+#     upValues = np.argsort(mi_features_matrix) #order indices of rising matrix values PER ROW
+#     downValues = np.flip(upValues,axis = 1) #flip backwards to get indices of falling matrix values
+    
+#     rowSort = np.zeros((6,6))
+# for n in range(6):
+#     rowSort[n]= mat[n,downValues[n,:]] 
+#     #creates matrix sorted by descending value per each row
+    
+#     most3 = rowSort[:,0:3] #three biggest values in each row
 
 def natural_language_explanation():
-    #NOT FINISHED
-    
-    
     pass
 
 
 # all_image_analysis()
 # plot_data()
 # mutual_information()
-#single_image_analysis("human_cell_dataset/400.jpg")
-single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
+single_image_analysis("human_cell_dataset/400.jpg")
+# single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
