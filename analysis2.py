@@ -151,6 +151,7 @@ def plot_data(class_label, image_data):
     plt.show()
 
 def single_image_analysis(filename):
+    """
     class_label = cnn.predicter(filename)
     if(class_label == 0):
         num_blobs, avg_area = fe.find_blob_feats(filename, False)
@@ -162,8 +163,8 @@ def single_image_analysis(filename):
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 2] #two is passed in as the last argument so that plotting can highlight that as the image in the plots
 
     plot_data(class_label, data_array) 
-
-    data = np.loadtxt("full_image_set_analysis.csv", delimiter = ',') 
+    """
+    data = np.loadtxt("full_image_set_analysis2.csv", delimiter = ',') 
     dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
 
     mi_features_list = list()
@@ -181,7 +182,7 @@ def single_image_analysis(filename):
         
         
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
-
+    #np.savetxt("MI_Between_FeaturesMultipleClasses.csv",mi_features_matrix, delimiter = ',')
     print(mi_features_list)
     print(mi_features_matrix)
 
@@ -213,4 +214,5 @@ def natural_language_explanation():
 # mutual_information()
 #single_image_analysis("human_cell_dataset/400.jpg")
 #single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
-a, b, c, d, e = all_image_analysis2()
+#a, b, c, d, e = all_image_analysis2()
+hello = single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\Test Images\301.jpg')
