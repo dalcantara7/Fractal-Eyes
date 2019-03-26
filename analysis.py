@@ -54,30 +54,33 @@ def all_image_analysis():
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
 def single_image_analysis(filename):
-    class_label = cnn.predicter(filename)
-    if(class_label == 0):
-        num_blobs, avg_area = fe.find_blob_feats(filename, False)
-    else:
-        num_blobs, avg_area = fe.find_blob_feats(filename, True)
-    avg_color = fe.color_avg(filename)
-    lum_avg = fe.lum_avg(filename)
+    # class_label = cnn.predicter(filename)
+    class_label = 0 #FIXME: remove once NN back in
+    # if(class_label == 0):
+    #     num_blobs, avg_area = fe.find_blob_feats(filename, False)
+    # else:
+    #     num_blobs, avg_area = fe.find_blob_feats(filename, True)
+    # avg_color = fe.color_avg(filename)
+    # lum_avg = fe.lum_avg(filename)
 
-    data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 2] #two is passed in as the last argument so that plotting can highlight that as the image in the plots
+    # data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 0.5] #0.5 is passed in as the last argument so that plotting can highlight that as the image in the plots
     
     #plotting of data
-    pp.indiv_pair_plot(data_array)
+    # pp.indiv_pair_plot(data_array)
+
+    class_labels = ["White Blood Cell", "U2OS Cell"]
+    feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
 
     data = np.loadtxt("full_image_set_analysis.csv", delimiter = ',') 
     dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
 
     mi_features_list = list()
-    feature_names = list(data)
+    feature_names = list(dataframe)
 
     mi_features_list = mi.mutualInformationScores(data)
     mi_features_list = mi_features_list.tolist()
 
-    top_n_features = sort_mi(mi_features_list, 5)
-    print(top_n_features)
+    top_n_features = sort_mi(mi_features_list, 3)
 
     for i in feature_names:
         mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
@@ -86,9 +89,12 @@ def single_image_analysis(filename):
         mi_features_list[j] = np.asarray(mi_features_list[j])
         
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
-    sort_mi_feats(mi_features_matrix)
+    top_feat_pairs = sort_mi_feats(mi_features_matrix)
+    # print(top_feat_pairs)
+    # print(top_feat_pairs[0][1])
 
-    #FIXME: generate natural language explanation
+    natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+
 
 def sort_mi(mi_matrix, n):
     top_n = sorted(range(len(mi_matrix)), key=lambda i: mi_matrix[i], reverse=True)[:int(n)]
@@ -99,8 +105,7 @@ def takeSecond(elem):
     return elem[1]
 
 def sort_mi_feats(mi_features_matrix):
-    data = np.loadtxt('Mutual_Information_Features.csv', delimiter = ',') #FIXME: change to use mi_features_matrix
-    dims = data.shape
+    data = np.loadtxt('Mutual_Information_Features.csv', delimiter = ',')
     triUp = np.triu(data)
 
     dataTri = [index for index in np.ndenumerate(triUp)]
@@ -113,8 +118,19 @@ def sort_mi_feats(mi_features_matrix):
     ascendVals = sorted(noDiag, key = takeSecond)
     descendVals = ascendVals[::-1] #First n values are n biggest
 
-def natural_language_explanation():
-    pass
+    return descendVals
+
+def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pairs, feat_names, class_labels, class_label, num_pairs):
+    print("The image is a ", class_labels[class_label])
+    print("Feature most relevant to class:")
+    for i in range(0, len(top_feats)):
+        print(str(i+1) + " - " + str(feat_names[top_feats[i]]) + " with mutual information score: " + str(mi_feat_for_class_label[i]))
+
+    print("")
+
+    print("Features most related to each other:")
+    for i in range(0, num_pairs):
+        print(str(i+1) + " - " + str(feat_names[top_feat_pairs[i][0][0]]) + " and " + str(feat_names[top_feat_pairs[i][0][1]]) + " with mutual information score: " + str(top_feat_pairs[i][1]))
 
 
 # all_image_analysis()
