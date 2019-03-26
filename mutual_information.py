@@ -93,26 +93,25 @@ i.e. feature 1 MI score vector is [MIfeature2,MIfeature3...MIfeature6]
 feature 3 MI score vector is [MIfeature1,MIfeature2,MIfeature4...MIfeature6]
 
 """
+"""
+data = np.loadtxt(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\full_image_set_analysis2.csv',
+                  delimiter = ',')  
+dataframe = pd.DataFrame(data, columns = ['feature0','feature1','feature2','feature3','feature4','feature5','labels'])
+MI_1 = mutualInformationFeatures(dataframe,'feature0','labels')
+print(MI_1)
 
-# data = np.loadtxt(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\full_image_set_analysis.csv',
-#                   delimiter = ',')  
-# dataframe = pd.DataFrame(data, columns = ['feature0','feature1','feature2','feature3',
-#                                           'feature4','feature5','labels'])
-# MI_1 = mutualInformationFeatures(dataframe,'feature0','labels')
-# print(MI_1)
-
-# MI_2 = mutualInformationFeatures(dataframe,'feature1','labels')
-# print(MI_2)
-# MI_3 = mutualInformationFeatures(dataframe,'feature2','labels')
-# print(MI_3)
-# MI_4 = mutualInformationFeatures(dataframe,'feature3','labels')
-# print(MI_4)
-# MI_5 = mutualInformationFeatures(dataframe,'feature4','labels')
-# print(MI_5)
-# MI_6 = mutualInformationFeatures(dataframe,'feature5','labels')
-# print(MI_6)
-
-# final = np.column_stack((MI_1,MI_2,MI_3,MI_4,MI_5,MI_6))
+MI_2 = mutualInformationFeatures(dataframe,'feature1','labels')
+print(MI_2)
+MI_3 = mutualInformationFeatures(dataframe,'feature2','labels')
+print(MI_3)
+MI_4 = mutualInformationFeatures(dataframe,'feature3','labels')
+print(MI_4)
+MI_5 = mutualInformationFeatures(dataframe,'feature4','labels')
+print(MI_5)
+MI_6 = mutualInformationFeatures(dataframe,'feature5','labels')
+print(MI_6)
+"""
+#final = np.column_stack((MI_1,MI_2,MI_3,MI_4,MI_5,MI_6))
 
 # saveFile = r'C:\Users\andre\Desktop\Repo498\fractal-eyes\Mutual_Information_Features.csv'
 # np.savetxt(saveFile,final,delimiter = ',')
