@@ -54,19 +54,18 @@ def all_image_analysis():
     np.savetxt("full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
 def single_image_analysis(filename):
-    # class_label = cnn.predicter(filename)
-    class_label = 0 #FIXME: remove once NN back in
-    # if(class_label == 0):
-    #     num_blobs, avg_area = fe.find_blob_feats(filename, False)
-    # else:
-    #     num_blobs, avg_area = fe.find_blob_feats(filename, True)
-    # avg_color = fe.color_avg(filename)
-    # lum_avg = fe.lum_avg(filename)
+    class_label = cnn.predicter(filename)
+    if(class_label == 0):
+        num_blobs, avg_area = fe.find_blob_feats(filename, False)
+    else:
+        num_blobs, avg_area = fe.find_blob_feats(filename, True)
+    avg_color = fe.color_avg(filename)
+    lum_avg = fe.lum_avg(filename)
 
-    # data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 0.5] #0.5 is passed in as the last argument so that plotting can highlight that as the image in the plots
+    data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 0.5] #0.5 is passed in as the last argument so that plotting can highlight that as the image in the plots
     
-    #plotting of data
-    # pp.indiv_pair_plot(data_array)
+    # plotting of data
+    pp.indiv_pair_plot(data_array)
 
     class_labels = ["White Blood Cell", "U2OS Cell"]
     feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
@@ -90,8 +89,6 @@ def single_image_analysis(filename):
         
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
     top_feat_pairs = sort_mi_feats(mi_features_matrix)
-    # print(top_feat_pairs)
-    # print(top_feat_pairs[0][1])
 
     natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
@@ -136,5 +133,5 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
 # all_image_analysis()
 # plot_data()
 # mutual_information()
-single_image_analysis("human_cell_dataset/400.jpg")
+# single_image_analysis("human_cell_dataset/400.jpg")
 # single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
