@@ -90,7 +90,7 @@ def single_image_analysis(filename):
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
     top_feat_pairs = sort_mi_feats(mi_features_matrix)
 
-    natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+    # natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
 
 def sort_mi(mi_matrix, n):
