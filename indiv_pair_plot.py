@@ -7,7 +7,7 @@ from matplotlib.lines import Line2D
 import scipy.stats
 
 def indiv_pair_plot(analyzed_image_data):
-    data = np.loadtxt("full_image_set_analysis.csv", delimiter = ',') 
+    data = np.loadtxt("excel_files/full_image_set_analysis.csv", delimiter = ',') 
     data = data.tolist()
     data.append(analyzed_image_data)
     data = np.asarray(data)
