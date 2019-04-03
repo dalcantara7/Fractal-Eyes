@@ -164,21 +164,22 @@ def single_image_analysis(filename):
     natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
 def single_image_analysis_four_class(filename):
-    class_label = cnn.predicter(filename)
+    # class_label = cnn.predicter(filename)
+    class_label = 3
     num_blobs, avg_area = fe.find_blob_feats(filename, False)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
 
-    data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 0.5] #0.5 is passed in as the last argument so that plotting can highlight that as the image in the plots
+    data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 4] #4 is passed in as the last argument so that plotting can highlight that as the image in the plots
     
     # plotting of data
-    pp.indiv_pair_plot(data_array)
+    pp.indiv_pair_plot_four_class(data_array)
 
     class_labels = ["Eosinophil", "Lymphocyte", "Monoctye", "Neutrophil"]
-    feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
+    feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminance", "Class"]
 
     data = np.loadtxt("excel_files/full_image_set_analysis_four_class.csv", delimiter = ',') 
-    dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
+    dataframe = pd.DataFrame(data, columns=["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminance", "Class"])
 
     mi_features_list = list()
     feature_names = list(dataframe)
@@ -197,7 +198,7 @@ def single_image_analysis_four_class(filename):
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
     top_feat_pairs = sort_mi_feats(mi_features_matrix)
 
-    # natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+    natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
 def sort_mi(mi_matrix, n):
     top_n = sorted(range(len(mi_matrix)), key=lambda i: mi_matrix[i], reverse=True)[:int(n)]
@@ -239,5 +240,5 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
 # all_image_analysis()
 # plot_data()
 # mutual_information()
-# single_image_analysis("human_cell_dataset/400.jpg")
+# single_image_analysis_four_class("human_cell_dataset/400.jpg")
 # single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')

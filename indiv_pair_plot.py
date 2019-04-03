@@ -20,6 +20,8 @@ def indiv_pair_plot(analyzed_image_data):
     u2os_legend_elem = Line2D([0], [0], color='w', label=labels[1], marker = 'o', markerfacecolor=colors[2], markersize=7)
     analyzed_legend_elem = Line2D([0], [0], color='w', label=labels[2], marker = 'o', markerfacecolor=colors[1], markersize=7)
 
+    handles = [white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem]
+
     #density plots
     for i in range(0,6):
         plt.figure()
@@ -36,7 +38,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i+1], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+1])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 + 1) + '_' + str(i + 1) + '.png')
 
     for i in range (0,4):
@@ -44,7 +46,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i+2], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+2])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 + 2) + '_' + str(i + 1) + '.png')
 
     for i in range (0,3):
@@ -52,7 +54,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i+3], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+3])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 + 3) + '_' + str(i + 1) + '.png')
 
     for i in range (0,2):
@@ -60,7 +62,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i+4], c=data[:,6], cmap=mpl.colors.ListedColormap(colors))
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+4])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 + 4) + '_' + str(i + 1) + '.png')
 
     for i in range (0,1):
@@ -68,7 +70,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i+5], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i+5])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 + 5) + '_' + str(i + 1) + '.png')
 
     # # diagonal immediately above histograms
@@ -77,7 +79,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i-1], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-1])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 1) + '_' + str(i + 1) + '.png')
 
     for i in range (2,6):
@@ -85,7 +87,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i-2], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-2])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 2) + '_' + str(i + 1) + '.png')
 
     for i in range (3,6):
@@ -93,7 +95,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i-3], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-3])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 3) + '_' + str(i + 1) + '.png')
 
     for i in range (4,6):
@@ -101,7 +103,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i-4], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-4])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 4) + '_' + str(i + 1) + '.png')
 
     for i in range (5,6):
@@ -109,5 +111,119 @@ def indiv_pair_plot(analyzed_image_data):
         plt.scatter(data[:,i], data[:,i-5], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
         plt.xlabel(columns[i])
         plt.ylabel(columns[i-5])
-        plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem])
+        plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
+
+def indiv_pair_plot_four_class(analyzed_image_data):
+    data = np.loadtxt("excel_files/full_image_set_analysis_four_class.csv", delimiter = ',') 
+    data = data.tolist()
+    data.append(analyzed_image_data)
+    data = np.asarray(data)
+
+    columns = ["Number of Blobs", "Average Area of Blob", "Average Red", "Average Green", "Average Blue", "Average Lumosity", "Class"]
+    colors = ['red', 'green', 'blue', 'purple', 'yellow'] #mapping of colors is as follows: [0]->Eosinophil [1]->Lymphocyte [2]->Monocyte [3]->Neutrophil [4]->Analyzed Image
+    labels = ['Eosinophil', 'Lymphocyte', 'Monocyte', 'Neutrophil', 'Analyzed Image']
+
+    eosinophil_legend_elem = Line2D([0], [0], color='w', label=labels[0], marker='o', markerfacecolor=colors[0], markersize=7)
+    lymphocyte_legend_elem = Line2D([0], [0], color='w', label=labels[1], marker = 'o', markerfacecolor=colors[1], markersize=7)
+    monocyte_legend_elem = Line2D([0], [0], color='w', label=labels[2], marker = 'o', markerfacecolor=colors[2], markersize=7)
+    neutrophil_legend_elem = Line2D([0], [0], color='w', label=labels[3], marker = 'o', markerfacecolor=colors[3], markersize=7)
+    analyzed_legend_elem = Line2D([0], [0], color='w', label=labels[4], marker = 'o', markerfacecolor=colors[4], markersize=7)
+
+    handles = [eosinophil_legend_elem, lymphocyte_legend_elem, monocyte_legend_elem, neutrophil_legend_elem, analyzed_legend_elem]
+
+    #density plots
+    for i in range(0,6):
+        plt.figure()
+        sns.kdeplot(data[:619,i], shade=True, color=colors[0])
+        sns.kdeplot(data[619:1238,i], shade=True, color=colors[1])
+        sns.kdeplot(data[1238:1857,i], shade=True, color=colors[2])
+        sns.kdeplot(data[-619:,i], shade=True, color=colors[3])
+        plt.xlabel(columns[i])
+        plt.ylabel('Density')
+        plt.legend(handles=handles[:-1])
+        plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1) + '.png')
+
+    #diagonal immediately below histograms
+    for i in range(0,5):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i+1], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i+1])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 + 1) + '_' + str(i + 1) + '.png')
+
+    for i in range (0,4):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i+2], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i+2])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 + 2) + '_' + str(i + 1) + '.png')
+
+    for i in range (0,3):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i+3], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i+3])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 + 3) + '_' + str(i + 1) + '.png')
+
+    for i in range (0,2):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i+4], c=data[:,6], cmap=mpl.colors.ListedColormap(colors))
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i+4])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 + 4) + '_' + str(i + 1) + '.png')
+
+    for i in range (0,1):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i+5], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i+5])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 + 5) + '_' + str(i + 1) + '.png')
+
+    # # diagonal immediately above histograms
+    for i in range(1,6):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i-1], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i-1])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 - 1) + '_' + str(i + 1) + '.png')
+
+    for i in range (2,6):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i-2], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i-2])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 - 2) + '_' + str(i + 1) + '.png')
+
+    for i in range (3,6):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i-3], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i-3])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 - 3) + '_' + str(i + 1) + '.png')
+
+    for i in range (4,6):
+        plt.figure()    
+        plt.scatter(data[:,i], data[:,i-4], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i-4])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 - 4) + '_' + str(i + 1) + '.png')
+
+    for i in range (5,6):
+        plt.figure()
+        plt.scatter(data[:,i], data[:,i-5], c=data[:,6], cmap=mpl.colors.ListedColormap(colors), label=colors)
+        plt.xlabel(columns[i])
+        plt.ylabel(columns[i-5])
+        plt.legend(handles=handles)
+        plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
+
+indiv_pair_plot_four_class([0,0,0,0,0,0,4])
