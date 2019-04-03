@@ -15,6 +15,9 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 from PIL import Image
 from keras import backend as K
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 
 """
 The input to this function a jpeg image from the given Black vs Bloodimage dataset. The filepath 

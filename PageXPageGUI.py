@@ -6,6 +6,11 @@ Created on Sat Mar  9 20:36:22 2019
 @author: pedroalcaraz
 """
 
+import matplotlib
+matplotlib.use('TkAgg')
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
 import tkinter as tk
 import analysis as an
 from PIL import Image, ImageTk
