@@ -225,5 +225,3 @@ def indiv_pair_plot_four_class(analyzed_image_data):
         plt.ylabel(columns[i-5])
         plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
-
-indiv_pair_plot_four_class([0,0,0,0,0,0,4])
