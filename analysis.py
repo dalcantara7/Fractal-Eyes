@@ -122,7 +122,7 @@ def all_image_analysis_four_class():
     
     numpy_array_features = np.column_stack((num_blobs_list, avg_area_list, avg_color_list, lum_avg_list, labels))
     
-    np.savetxt("excel_files/full_image_set_analysis2.csv", numpy_array_features, delimiter=",")
+    np.savetxt("excel_files/full_image_set_analysis_four_class.csv", numpy_array_features, delimiter=",")
 
 def single_image_analysis(filename):
     class_label = cnn.predicter(filename)
@@ -171,6 +171,7 @@ def single_image_analysis_four_class(filename):
     lum_avg = fe.lum_avg(filename)
 
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 4] #4 is passed in as the last argument so that plotting can highlight that as the image in the plots
+    print(data_array)
     
     # plotting of data
     pp.indiv_pair_plot_four_class(data_array)
@@ -237,8 +238,8 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
         print(str(i+1) + " - " + str(feat_names[top_feat_pairs[i][0][0]]) + " and " + str(feat_names[top_feat_pairs[i][0][1]]) + " with mutual information score: " + str(top_feat_pairs[i][1]))
 
 
-# all_image_analysis()
+# all_image_analysis_four_class()
 # plot_data()
 # mutual_information()
-# single_image_analysis_four_class("human_cell_dataset/400.jpg")
+single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
 # single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')

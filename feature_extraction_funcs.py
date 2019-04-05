@@ -55,26 +55,6 @@ def lum_avg(filename):
 
     return lumAvg
 
-
-def canny_edge_detect(filename):
-    """
-    The three most common types of edge detection algorithms are: Sobel, Laplacian, 
-    and Canny edge detections. Sobel detection relies on the first derivative,
-    Laplacian relies on the second derivative, and Canny edge detection is by 
-    intensity gradient.    
-    """
-    image = cv2.imread(filename)
-    edges = cv2.Canny(image,10,200)
-    
-#    #Display edge detection
-#    plt.subplot(121),plt.imshow(img,cmap = 'gray')
-#    plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-#    plt.subplot(122),plt.imshow(edges,cmap = 'gray')
-#    plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-#    plt.show()
-
-    return 
-
 def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean that is set to True when examining the black human cells
                                             #as the extraction settings for those images is different
     #values for white blood cells
