@@ -241,5 +241,5 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
 # all_image_analysis_four_class()
 # plot_data()
 # mutual_information()
-single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
+# single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
 # single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
