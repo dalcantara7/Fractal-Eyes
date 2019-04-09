@@ -77,10 +77,6 @@ class StartPage(tk.Frame):
         self.diagButton.config(padx = 33, pady = 10)
         self.diagButton.grid(row = 3, column = 7, columnspan = 2)
         
-        self.segmButton = tk.Button(self, text = "Segmentation", fg = "black", command = self.segmButtonFunc)
-        self.segmButton.config(padx = 19, pady = 10)
-        self.segmButton.grid(row = 4, column = 7, columnspan = 2)
-        
         self.featconButton = tk.Button(self, text = "Feature Constraints", fg = "black", command = self.featconButtonFunc)
         self.featconButton.config(pady = 10)
         self.featconButton.grid(row = 5, column = 7, columnspan = 2)
@@ -88,11 +84,6 @@ class StartPage(tk.Frame):
         self.quit = tk.Button(self, text = "QUIT", fg = "red", command = self.closewindow, padx = 31)
         self.quit.config(pady = 10, padx = 48)
         self.quit.grid(row = 10, column = 7, columnspan = 2)
-        
-        self.var = tk.StringVar(self)
-        self.var.set("Select Data") # initial value
-        self.option = tk.OptionMenu(self, self.var, "Image 1", "Image 2", "Image 3", "Image 4")
-        self.option.grid(row = 0, column = 5)
         
         self.goButton = tk.Button(self, text = "Go", command = self.dataMenu)
         self.goButton.config(padx = 15, pady = 10)
