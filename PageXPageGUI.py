@@ -116,6 +116,7 @@ class StartPage(tk.Frame):
         self.typeofanalysis = tk.Radiobutton(self, text="Leukocytes",font=("Arial", 14,), variable=self.radio_button_var, value=2)
         self.typeofanalysis.grid(row = 23, column = 7, columnspan = 2)
         self.typeofanalysis.config(anchor="w")
+        #single_image_analysis_four_class(filename)
         
         
         self.UAphoto = Image.open(self.UAlogo)
