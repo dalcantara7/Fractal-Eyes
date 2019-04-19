@@ -47,6 +47,7 @@ def lum_avg(filename):
     
     #Luminance Calculation
     lumMat = 0.2126*image[:,:,0] + 0.7152*image[:,:,1] + 0.0722*image[:,:,2]
+
     # plt.imshow(lumMat,cmap='gray')
     # plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
     # plt.show()
@@ -55,8 +56,8 @@ def lum_avg(filename):
 
     return lumAvg
 
-def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean that is set to True when examining the black human cells
-                                            #as the extraction settings for those images is different
+def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean that is set to True when examining the U2OS human cells
+                                            #as the extraction settings for those images are different
     #values for white blood cells
     log_max_sigma = 50
     log_min_sigma = 5
@@ -71,6 +72,7 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
     doh_threshold = 0.0002
     doh_overlap = 0
 
+    #values for U2OS cells
     if (black_cell):
         log_max_sigma = 25
         log_min_sigma = 5
@@ -90,18 +92,23 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
     #convert image to gray scale for analysis
     image_gray = rgb2gray(image)
 
+    #laplacian of gaussian algorithm
     blobs_log = blob_log(image_gray, max_sigma=log_max_sigma, min_sigma=log_min_sigma, threshold=log_threshold, overlap=log_overlap)
-
     # Compute radii in the 3rd column.
     blobs_log[:, 2] = blobs_log[:, 2] * sqrt(2)
 
+    #Difference of Gaussian
     blobs_dog = blob_dog(image_gray, max_sigma=dog_max_sigma, threshold=dog_threshold, overlap=dog_overlap)
+    # Compute radii in the 3rd column.
     blobs_dog[:, 2] = blobs_dog[:, 2] * sqrt(2)
 
+    #Determinant of Hessian
     blobs_doh = blob_doh(image_gray, max_sigma=doh_max_sigma, threshold=doh_threshold, overlap=doh_overlap)
 
     blobs_list = [blobs_log, blobs_dog, blobs_doh]
     num_blobs = len(blobs_log) + len(blobs_dog) + len(blobs_doh)
+    
+    #these are used for the plotting below but have no direct functional use in the code
     colors = ['yellow', 'lime', 'red']
     titles = ['Laplacian of Gaussian', 'Difference of Gaussian',
             'Determinant of Hessian']
@@ -125,9 +132,6 @@ def find_blob_feats(filename, black_cell): #2nd param black_cell is a boolean th
             sum_radii_squared+= radii_squared
         # ax[idx].set_axis_off()
 
-    #FIXME: blobs_list[0] is always 0 for white blood cell case
-
-    # print(len(blobs_list[0]), len(blobs_list[1]), len(blobs_list[2]))
     avg_area = sum_radii_squared / (len(blobs_list[0]) + len(blobs_list[1]) + len(blobs_list[2])) #computation avg area of features (ingoring pi as it is a constant) units in pixels
 
     #plots blobs on image
