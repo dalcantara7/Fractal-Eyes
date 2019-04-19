@@ -164,14 +164,12 @@ def single_image_analysis(filename):
     natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
 def single_image_analysis_four_class(filename):
-    # class_label = cnn.predicter(filename)
-    class_label = 3
+    class_label = cnn.predicter(filename)
     num_blobs, avg_area = fe.find_blob_feats(filename, False)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
 
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 4] #4 is passed in as the last argument so that plotting can highlight that as the image in the plots
-    print(data_array)
     
     # plotting of data
     pp.indiv_pair_plot_four_class(data_array)
