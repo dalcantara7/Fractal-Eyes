@@ -7,22 +7,25 @@ from matplotlib.lines import Line2D
 import scipy.stats
 
 def indiv_pair_plot(analyzed_image_data):
+    #load all image data and appends the currently analyzed image
     data = np.loadtxt("excel_files/full_image_set_analysis.csv", delimiter = ',') 
     data = data.tolist()
     data.append(analyzed_image_data)
     data = np.asarray(data)
 
+    #declares columns, colors, and labels to be used 
     columns = ["Number of Blobs", "Average Area of Blob", "Average Red", "Average Green", "Average Blue", "Average Lumosity", "Class"]
     colors = ['red', 'green', 'blue'] #mapping of colors is as follows: [0]->White Blood Cell [1]->Analyzed Image [2]->U2OS
     labels = ['White Blood Cell', 'U2OS Cell', 'Analyzed Image']
 
+    #generates matplotlib legend elements
     white_blood_legend_elem = Line2D([0], [0], color='w', label=labels[0], marker='o', markerfacecolor=colors[0], markersize=7)
     u2os_legend_elem = Line2D([0], [0], color='w', label=labels[1], marker = 'o', markerfacecolor=colors[2], markersize=7)
     analyzed_legend_elem = Line2D([0], [0], color='w', label=labels[2], marker = 'o', markerfacecolor=colors[1], markersize=7)
 
     handles = [white_blood_legend_elem, u2os_legend_elem, analyzed_legend_elem]
 
-    #density plots
+    #density plots (these are the plots of features vs themselves, it is best to represent these as density plots rather than scatter plots)
     for i in range(0,6):
         plt.figure()
         sns.kdeplot(data[:365,i], shade=True, color=colors[0])
@@ -31,6 +34,10 @@ def indiv_pair_plot(analyzed_image_data):
         plt.ylabel('Density')
         plt.legend(handles=[white_blood_legend_elem, u2os_legend_elem])
         plt.savefig('pair_plots/' + str(i + 1) + '_' + str(i + 1) + '.png')
+
+    #all of the below are the generation of the scatter plots
+    #the naming convention is set up so as to generate a pair plot like shape in the final GUI
+
 
     #diagonal immediately below histograms
     for i in range(0,5):
@@ -114,7 +121,7 @@ def indiv_pair_plot(analyzed_image_data):
         plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
 
-def indiv_pair_plot_four_class(analyzed_image_data):
+def indiv_pair_plot_four_class(analyzed_image_data): #comments here are the same as above but the function is restructured to handle four classes
     data = np.loadtxt("excel_files/full_image_set_analysis_four_class.csv", delimiter = ',') 
     data = data.tolist()
     data.append(analyzed_image_data)

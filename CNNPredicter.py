@@ -35,9 +35,9 @@ def predicter(filepath):
     prediction = model.predict_classes(image_test_array)
     
     if (prediction == 0):
-        return 'BloodImage'
+        return 0
     else:
-        return 'BlackImage'
+        return 1
 
 """
 This filepath instead uses a .jpeg instead of .jpg make sure to check test image file extension
@@ -55,13 +55,13 @@ def predicter_four_class(filepath):
     prediction = model.predict_classes(image_test_array)
     
     if(prediction == 0):
-        return 'Eosinophil'
+        return 0
     elif(prediction == 1):
-        return 'Lymphocyte'
+        return 1
     elif(prediction == 2):
-        return 'Monocyte'
+        return 2
     elif(prediction == 3):
-        return 'Neutrophil'
+        return 3
     
     
 #test1 = predicter2(r'C:\Users\andre\Desktop\498B\498Bdata2\Validation\NEUTROPHIL\_0_2399.jpeg')

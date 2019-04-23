@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import CNNPredicter as cnn
 import mutual_information as mi
 
-num_samples = 365
+num_samples = 365 #for two class problem
 num_samples_four_class = 619
 
 def all_image_analysis():
@@ -17,6 +17,7 @@ def all_image_analysis():
     lum_avg_list = []
     edges_list = []
 
+    #calculates all features for all samples
     for i in range(0, num_samples):
         white_blood_cell_filename = "master_white_blood_cell/JPEGImages/" + str(i) + ".jpg"
         num_blobs, avg_area = fe.find_blob_feats(white_blood_cell_filename, False)
@@ -51,9 +52,10 @@ def all_image_analysis():
     
     numpy_array_features = np.column_stack((num_blobs_list, avg_area_list, avg_color_list, lum_avg_list, labels))
     
+    #saves as csv for use in later functions (reduces run time by not needing to calculate all features for all images each time the program is run)
     np.savetxt("excel_files/full_image_set_analysis.csv", numpy_array_features, delimiter=",")
 
-def all_image_analysis_four_class():
+def all_image_analysis_four_class(): #comments here are the same as the above function but the function restructred for more classes
     num_blobs_list = []
     avg_area_list = []
     avg_color_list = []
@@ -125,19 +127,23 @@ def all_image_analysis_four_class():
     np.savetxt("excel_files/full_image_set_analysis_four_class.csv", numpy_array_features, delimiter=",")
 
 def single_image_analysis(filename):
-    class_label = cnn.predicter(filename)
-    if(class_label == 0):
+    class_label = cnn.predicter(filename) #gets class label
+    
+    #conditional for applying correct blob parameters
+    if(class_label == 0): 
         num_blobs, avg_area = fe.find_blob_feats(filename, False)
     else:
         num_blobs, avg_area = fe.find_blob_feats(filename, True)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
 
+    #creates a data array in the same form as the csv to compare against full dataset
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 0.5] #0.5 is passed in as the last argument so that plotting can highlight that as the image in the plots
     
-    # plotting of data
+    #generates plots of data
     pp.indiv_pair_plot(data_array)
 
+    #set up labels
     class_labels = ["White Blood Cell", "U2OS Cell"]
     feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
 
@@ -147,9 +153,11 @@ def single_image_analysis(filename):
     mi_features_list = list()
     feature_names = list(dataframe)
 
+    #calculates mutual information for class label
     mi_features_list = mi.mutualInformationScores(data)
     mi_features_list = mi_features_list.tolist()
 
+    #gets top n features for natural language explanation
     top_n_features = sort_mi(mi_features_list, 3)
 
     for i in feature_names:
@@ -163,15 +171,13 @@ def single_image_analysis(filename):
 
     natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
-def single_image_analysis_four_class(filename):
-    # class_label = cnn.predicter(filename)
-    class_label = 3
+def single_image_analysis_four_class(filename): #comments here are the same as the above function but the funciton restructured for more classes (first conditional is also removed since the blob analysis is the same for all for classes)
+    class_label = cnn.predicter(filename)
     num_blobs, avg_area = fe.find_blob_feats(filename, False)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
 
     data_array = [num_blobs, avg_area, avg_color[0], avg_color[1], avg_color[2], lum_avg, 4] #4 is passed in as the last argument so that plotting can highlight that as the image in the plots
-    print(data_array)
     
     # plotting of data
     pp.indiv_pair_plot_four_class(data_array)
@@ -201,15 +207,12 @@ def single_image_analysis_four_class(filename):
 
     natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
-def sort_mi(mi_matrix, n):
+def sort_mi(mi_matrix, n): #sorts mutual information scores for class label
     top_n = sorted(range(len(mi_matrix)), key=lambda i: mi_matrix[i], reverse=True)[:int(n)]
 
     return top_n
 
-def takeSecond(elem):
-    return elem[1]
-
-def sort_mi_feats(mi_features_matrix):
+def sort_mi_feats(mi_features_matrix): #sorts mutual information scores for features
     data = np.loadtxt('excel_files/Mutual_Information_Features.csv', delimiter = ',')
     triUp = np.triu(data)
 
@@ -225,7 +228,10 @@ def sort_mi_feats(mi_features_matrix):
 
     return descendVals
 
-def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pairs, feat_names, class_labels, class_label, num_pairs):
+def takeSecond(elem): #function used in sort_mi_feats above
+    return elem[1]
+
+def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pairs, feat_names, class_labels, class_label, num_pairs): #generates natural language explanation for GUI and saved report (should be expanded upon)
     print("The image is a", class_labels[class_label])
     print("Feature most relevant to class:")
     for i in range(0, len(top_feats)):

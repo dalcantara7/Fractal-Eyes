@@ -20,8 +20,9 @@ from keras import backend as K
 from keras import optimizers
 
 
-img_width, img_height = 200, 200
+img_width, img_height = 200, 200 # estable image dimensions
 
+#make sure to have two seperate directories of images for training and validation
 train_data_dir = r'C:\Users\andre\Desktop\498B\498Bdata2\Train'
 validation_data_dir = r'C:\Users\andre\Desktop\498B\498Bdata2\Validation'
 nb_train_samples = 2678
@@ -29,14 +30,17 @@ nb_validation_samples = 420
 epochs = 25
 batch_size = 32
 
-if K.image_data_format() == 'channels_first':
+if K.image_data_format() == 'channels_first': ## Need to make sure channel order is consistent
     input_shape = (3, img_width, img_height)
 else:
     input_shape = (img_width, img_height, 3)
   
+#the following is the neural network architecture. This is a standard Convolutional neural network architecture 
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=input_shape))
+#It is important to use a relu activation function to reduce the vanish gradient phenomenon
 model.add(Activation('relu'))
+# Pooling is very useful in reducing complexity and an overall standard practice in CNNs
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(32, (3, 3)))
@@ -54,7 +58,7 @@ model.add(Dropout(0.5))
 model.add(Dense(4))
 model.add(Activation('softmax'))
 
-#adam = optimizers.adam(lr= .5, decay= 1e-6, momentum = .9, nesterov = True)
+#Now compile the model using cross entropy as the loss many different optimizers can be used here.
 model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop',
               metrics=['accuracy'])
@@ -70,18 +74,21 @@ train_datagen = ImageDataGenerator(
 # only rescaling
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
+#Train using flow_from_directory
 train_generator = train_datagen.flow_from_directory(
     train_data_dir,
     target_size=(img_width, img_height),
     batch_size=batch_size,
     class_mode='categorical')
 
+#validate using flow_from_directory
 validation_generator = test_datagen.flow_from_directory(
     validation_data_dir,
     target_size=(img_width, img_height),
     batch_size=batch_size,
     class_mode= 'categorical')
 
+#finally fit
 model.fit_generator(
     train_generator,
     steps_per_epoch=nb_train_samples // batch_size,
@@ -89,7 +96,7 @@ model.fit_generator(
     validation_data=validation_generator,
     validation_steps=nb_validation_samples // batch_size)
 
-
+#Make sure to save the model to use for prediction later.
 model.save_weights('second_try.h5')
 model.save('MultiClass.model')
 test_image_path = r'C:\Users\andre\Desktop\498B\498Bdata\Validation\Class1\BloodImage_00361.jpg'
