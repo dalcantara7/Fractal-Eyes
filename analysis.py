@@ -173,6 +173,7 @@ def single_image_analysis(filename):
 
 def single_image_analysis_four_class(filename): #comments here are the same as the above function but the funciton restructured for more classes (first conditional is also removed since the blob analysis is the same for all for classes)
     class_label = cnn.predicter(filename)
+    # class_label = 3
     num_blobs, avg_area = fe.find_blob_feats(filename, False)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
@@ -232,16 +233,21 @@ def takeSecond(elem): #function used in sort_mi_feats above
     return elem[1]
 
 def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pairs, feat_names, class_labels, class_label, num_pairs): #generates natural language explanation for GUI and saved report (should be expanded upon)
-    print("The image is a", class_labels[class_label])
-    print("Feature most relevant to class:")
+    data_str = list()
+
+    # print("The image is a", class_labels[class_label], "\n\nFeature most relevant to class:")
+    data_str.append(("The image is a" + str(class_labels[class_label]) + "\n\nFeature most relevant to class:"))
     for i in range(0, len(top_feats)):
-        print(str(i+1) + " - " + str(feat_names[top_feats[i]]) + " with mutual information score: " + str(mi_feat_for_class_label[i]))
+        data_str.append((str(i+1) + " - " + str(feat_names[top_feats[i]]) + " with mutual information score: " + str(mi_feat_for_class_label[i])))
 
-    print("")
+    data_str.append(str(""))
 
-    print("Features most related to each other:")
+    data_str.append("Features most related to each other:")
     for i in range(0, num_pairs):
-        print(str(i+1) + " - " + str(feat_names[top_feat_pairs[i][0][0]]) + " and " + str(feat_names[top_feat_pairs[i][0][1]]) + " with mutual information score: " + str(top_feat_pairs[i][1]))
+        data_str.append(str(i+1) + " - " + str(feat_names[top_feat_pairs[i][0][0]]) + " and " + str(feat_names[top_feat_pairs[i][0][1]]) + " with mutual information score: " + str(top_feat_pairs[i][1]))
+
+    for i in range(0, len(data_str)):
+        print(data_str[i])
 
 
 # all_image_analysis_four_class()
