@@ -150,7 +150,7 @@ def single_image_analysis(filename):
     feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
 
     data = np.loadtxt("excel_files/full_image_set_analysis.csv", delimiter = ',') 
-    dataframe = pd.DataFrame(data, columns=["Num Feats", "Avg Area", "Avg Red", "Avg Green", "Avg Blue", "Avg Lum", "Class"])
+    dataframe = pd.DataFrame(data, columns=["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminance", "Class"])
 
     mi_features_list = list()
     feature_names = list(dataframe)
@@ -171,7 +171,9 @@ def single_image_analysis(filename):
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
     top_feat_pairs = sort_mi_feats(mi_features_matrix)
 
-    natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+    nle = natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+
+    return nle
 
 def single_image_analysis_four_class(filename): #comments here are the same as the above function but the funciton restructured for more classes (first conditional is also removed since the blob analysis is the same for all for classes)
     class_label = cnn.predicter(filename)
@@ -256,9 +258,15 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
 
     return final_str
 
+def save_analysis(filepath, text):
+    text_file = open(filepath + "analysis.txt", "w")
+    text_file.write(text)
+    text_file.close
+
+
 
 # all_image_analysis_four_class()
 # plot_data()
 # mutual_information()
 # single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
-# single_image_analysis(r'C:\Users\andre\Desktop\Repo498\fractal-eyes\human_cell_dataset\400.jpg')
+single_image_analysis("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
