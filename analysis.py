@@ -206,7 +206,9 @@ def single_image_analysis_four_class(filename): #comments here are the same as t
     mi_features_matrix = np.column_stack((mi_features_list[0], mi_features_list[1], mi_features_list[2], mi_features_list[3], mi_features_list[4], mi_features_list[5]))
     top_feat_pairs = sort_mi_feats(mi_features_matrix)
 
-    natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+    nle = natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
+
+    return nle
 
 def sort_mi(mi_matrix, n): #sorts mutual information scores for class label
     top_n = sorted(range(len(mi_matrix)), key=lambda i: mi_matrix[i], reverse=True)[:int(n)]
@@ -236,18 +238,22 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
     data_str = list()
 
     # print("The image is a", class_labels[class_label], "\n\nFeature most relevant to class:")
-    data_str.append(("The image is a" + str(class_labels[class_label]) + "\n\nFeature most relevant to class:"))
+    data_str.append(("The image is a " + str(class_labels[class_label]) + "\n\nFeature most relevant to class:\n"))
     for i in range(0, len(top_feats)):
-        data_str.append((str(i+1) + " - " + str(feat_names[top_feats[i]]) + " with mutual information score: " + str(mi_feat_for_class_label[i])))
+        data_str.append((str(i+1) + " - " + str(feat_names[top_feats[i]]) + " with mutual information score: " + str(mi_feat_for_class_label[i]) + "\n"))
 
-    data_str.append(str(""))
+    data_str.append(str("\n"))
 
-    data_str.append("Features most related to each other:")
+    data_str.append("Features most related to each other:\n")
     for i in range(0, num_pairs):
-        data_str.append(str(i+1) + " - " + str(feat_names[top_feat_pairs[i][0][0]]) + " and " + str(feat_names[top_feat_pairs[i][0][1]]) + " with mutual information score: " + str(top_feat_pairs[i][1]))
+        data_str.append(str(i+1) + " - " + str(feat_names[top_feat_pairs[i][0][0]]) + " and " + str(feat_names[top_feat_pairs[i][0][1]]) + " with mutual information score: " + str(top_feat_pairs[i][1]) + "\n")
 
+    final_str = ""
     for i in range(0, len(data_str)):
-        print(data_str[i])
+        final_str+= data_str[i]
+
+    # print(final_str)
+    return final_str
 
 
 # all_image_analysis_four_class()
