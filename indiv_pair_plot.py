@@ -121,6 +121,8 @@ def indiv_pair_plot(analyzed_image_data):
         plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
 
+    plt.close('all')
+
 def indiv_pair_plot_four_class(analyzed_image_data): #comments here are the same as above but the function is restructured to handle four classes
     data = np.loadtxt("excel_files/full_image_set_analysis_four_class.csv", delimiter = ',') 
     data = data.tolist()
@@ -232,3 +234,5 @@ def indiv_pair_plot_four_class(analyzed_image_data): #comments here are the same
         plt.ylabel(columns[i-5])
         plt.legend(handles=handles)
         plt.savefig('pair_plots/' + str(i + 1 - 5) + '_' + str(i + 1) + '.png')
+
+    plt.close('all')
