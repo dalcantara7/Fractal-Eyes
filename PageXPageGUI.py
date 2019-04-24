@@ -8,8 +8,6 @@ Created on Sat Mar  9 20:36:22 2019
 
 import matplotlib
 matplotlib.use('TkAgg')
-import os
-os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 import tkinter as tk
 import analysis as an
@@ -26,17 +24,19 @@ class SampleApp(tk.Tk):
         self.v = tk.StringVar()
         self.v_2 = tk.StringVar()
         self.pp_filename = ""
+        self.corr_data = tk.StringVar()
 
-        self.switch_frame(StartPage, self.filepath, self.v, self.v_2, self.pp_filename)
+        self.switch_frame(StartPage, self.filepath, self.v, self.v_2, self.pp_filename, self.corr_data)
                 
-    def switch_frame(self, frame_class, filepath, v, v_2, pp_filename):
+    def switch_frame(self, frame_class, filepath, v, v_2, pp_filename, corr_data):
         self.filepath = filepath
         self.v = (v)
         self.v_2 = (v_2)
         self.pp_filename = pp_filename
+        self.corr_data = corr_data
 
         """Destroys current frame and replaces it with a new one."""
-        new_frame = frame_class(self, self.filepath, self.v, self.v_2, self.pp_filename)
+        new_frame = frame_class(self, self.filepath, self.v, self.v_2, self.pp_filename, self.corr_data)
         if self._frame is not None:
             self._frame.destroy()
         self._frame = new_frame
@@ -47,7 +47,7 @@ class SampleApp(tk.Tk):
 ################################################################################################################################################################
 
 class StartPage(tk.Frame):
-    def __init__(self, master, filepath, v, v_2, pp_filename):
+    def __init__(self, master, filepath, v, v_2, pp_filename, corr_data):
         tk.Frame.__init__(self, master)
         
         self.filepath = filepath
@@ -55,10 +55,8 @@ class StartPage(tk.Frame):
         self.v_2 = v_2
         self.pp_filename = pp_filename
         
-        self.radio_button_var = tk.StringVar()
         self.radio_button_var = tk.IntVar()
-
-        
+        self.corr_data = corr_data
         
         self.UAlogo = "Images/arizona_logo.png"
         self.startPhoto = "Images/start.png"
@@ -77,7 +75,7 @@ class StartPage(tk.Frame):
         self.startIcon = self.startIcon.resize((35,35), Image.ANTIALIAS)
         self.startImg =  ImageTk.PhotoImage(self.startIcon)
         
-        self.startButton = tk.Button(self, text = "   Start Processing", font=("Arial", 14),image=self.startImg,command = self.startprocessing, compound="left")
+        self.startButton = tk.Button(self, text = "   Start Processing", font=("Arial", 14),image=self.startImg,command = self.startButtonFunc, compound="left")
         self.startButton.photo = self.startImg
         self.startButton.config(pady = 10, padx = 10)
         self.startButton.grid(row = 1, column = 1)
@@ -95,14 +93,10 @@ class StartPage(tk.Frame):
         self.saveIcon = self.saveIcon.resize((35,35), Image.ANTIALIAS)
         self.saveImg =  ImageTk.PhotoImage(self.saveIcon)
         
-        self.SaveButton = tk.Button(self, image=self.saveImg, fg = "black",command = self.startprocessing, text = "   Save Data", compound="left", font=("Arial", 14))
+        self.SaveButton = tk.Button(self, image=self.saveImg, fg = "black",command = self.saveButtonFunc, text = "   Save Data", compound="left", font=("Arial", 14))
         self.SaveButton.photo = self.saveImg
         self.SaveButton.config(pady = 10, padx = 10)
         self.SaveButton.grid(row = 1, column = 3)           
-        
-        self.gopage3 = tk.Button(self, text = "Page 2", font=("Arial", 14,), command=lambda: master.switch_frame(PageOne, self.filepath, self.v, self.v_2, self.pp_filename))
-        self.gopage3.config(padx = 42, pady = 10)
-        self.gopage3.grid(row = 24, column = 7, columnspan = 2)
         
         self.typeofanalysis = tk.Button(self, text="Type of Analysis", font=("Arial", 14), bg = "gray95", command = lambda: self.typeofanalysisFUNC())
         self.typeofanalysis.grid(row = 21, column = 7, columnspan = 2)
@@ -134,6 +128,9 @@ class StartPage(tk.Frame):
         self.maxbytes = 0
         
         print (self.radio_button_var.get())
+        
+        if self.filepath != ("images/Screen Shot 2019-02-04 at 11.54.25 AM.png"):
+            self.pairplotspage()
 
     def startprocessing(self):
         self.startButtonFunc()
@@ -170,7 +167,7 @@ class StartPage(tk.Frame):
             
         self.rightslection = tk.Button(top1, text = "Import Image", command = lambda: [self.browse(self.filepath),top1.destroy()])
         self.rightslection.grid(row = 2, column = 0, columnspan = 3)
-        
+
         
     def typeofanalysisFUNC (self):
         
@@ -178,6 +175,18 @@ class StartPage(tk.Frame):
         top1.geometry('250x200')
         
         self.titleLabel = tk.Label(top1, text = "Type of Analysis Explanation", pady = 10, font=("Arial", 14,"bold"))
+        self.titleLabel.grid(row = 0, column = 1)
+            
+        self.filepathLabel = tk.Label(top1, text = "There are two image data sets that can be used in analysis. Our neural network has been trained to classify your image given that you provide the type of image it is. Please select either the U2OS button or the Leukocyte button prior to initiating analysis.")
+        self.filepathLabel.grid(row = 1, pady = 0, columnspan = 3)
+        self.filepathLabel.config(wraplength = 250, anchor = "w")
+    
+    def make_a_selection (self):
+        
+        top1 = tk.Toplevel()
+        top1.geometry('250x200')
+        
+        self.titleLabel = tk.Label(top1, text = "Make a Selection", pady = 10, font=("Arial", 14,"bold"))
         self.titleLabel.grid(row = 0, column = 1)
             
         self.filepathLabel = tk.Label(top1, text = "There are two image data sets that can be used in analysis. Our neural network has been trained to classify your image given that you provide the type of image it is. Please select either the U2OS button or the Leukocyte button prior to initiating analysis.")
@@ -211,41 +220,47 @@ class StartPage(tk.Frame):
         print("Start Clicking Working")
         if self.radio_button_var.get() == 1:
             #print ("U20S")
-            an.single_image_analysis(self.filepath)
+            self.corr_data.set(an.single_image_analysis(self.filepath))
+            self.pairplotspage()
+            self.a_complete()
+            
         elif self.radio_button_var.get() == 2:
             #print ("Leuko")
-            an.single_image_analysis_four_class(self.filepath)
+            self.corr_data.set(an.single_image_analysis_four_class(self.filepath))
+            self.pairplotspage()
+            self.a_complete()
+        else:
+            self.gopage2 = tk.Button(self, text = "Make a Selection", font=("Arial", 14,), command = lambda: self.make_a_selection())
+            self.gopage2.config(padx = 10, pady = 10)
+            self.gopage2.grid(row = 24, column = 7, columnspan = 2)
             
     def stopButtonFunc(self):
         print("Stop Clicking Working")
         self.progress.stop()
     def saveButtonFunc(self):
         print("Save Clicking Working")
-    def diagButtonFunc(self):
-        print("Diagnosis Clicking Working")
-    def segmButtonFunc(self):
-        print("Segmentation Clicking Working")
-    def featconButtonFunc(self):
-        print("Feature Constraints Clicking Working")
-    def dataMenu(self):
-        print ("value is", self.var.get())
-    def closewindow(self):
-        print("closewindow Clicking Working")
-        self.window2()
+        self.save_filepath = tk.filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+        self.text2save = str(self.corr_data.get()) # starts from `1.0`, not `0.0`
+        self.save_filepath.write(self.text2save)
+        self.save_filepath.close()
         
-    def window2(self):
+    def pairplotspage(self):
         
-        top2 = tk.Toplevel()
+        self.gopage2 = tk.Button(self, text = "Pair Plots", font=("Arial", 14,), command=lambda: self.master.switch_frame(PageOne, self.filepath, self.v, self.v_2, self.pp_filename, self.corr_data))
+        self.gopage2.config(padx = 33, pady = 10)
+        self.gopage2.grid(row = 24, column = 7, columnspan = 2)
+       
+    def a_complete(self):
+        self.completedanalysis = tk.Label(self, text = "Analysis Complete!", font=("Arial", 14,))
+        self.completedanalysis.grid(row = 20, column = 7, columnspan = 2)
         
-        self.Home = Button(top2, text = "Home", fg = "black")
-        self.Home.config(fg="black", pady = 10)
-        self.Home.grid(row = 0, column = 1)
+        
 ################################################################################################################################################################
 ################################################################################################################################################################
 ################################################################################################################################################################
 
 class PageOne(tk.Frame):                                #f2
-    def __init__(self, master, filepath, v, v_2, pp_filename):
+    def __init__(self, master, filepath, v, v_2, pp_filename, corr_data):
         tk.Frame.__init__(self, master)
         
         self.master = master
@@ -255,7 +270,9 @@ class PageOne(tk.Frame):                                #f2
         self.v_2 = v_2
         self.pp_filename = pp_filename
         
-        self.back_first = tk.Button(self, text = "Back", command=lambda: master.switch_frame(StartPage, self.filepath, self.v, self.v_2, self.pp_filename), height = 2, width = 8)
+        self.corr_data = corr_data
+        
+        self.back_first = tk.Button(self, text = "Back", command=lambda: master.switch_frame(StartPage, self.filepath, self.v, self.v_2, self.pp_filename, self.corr_data), height = 2, width = 8)
         self.back_first.grid(row = 2, column = 0, padx = 5, pady = 5)
 
         self.frame_canvas = tk.Frame(self)
@@ -361,7 +378,7 @@ class PageOne(tk.Frame):                                #f2
         self.v = "Select Features"
         self.v_2 = (text)
         
-        self.master.switch_frame(PageTwo, self.filepath, self.v, self.v_2, self.selection_filename)
+        self.master.switch_frame(PageTwo, self.filepath, self.v, self.v_2, self.selection_filename, self.corr_data)
         return
         
 ################################################################################################################################################################
@@ -369,7 +386,7 @@ class PageOne(tk.Frame):                                #f2
 ################################################################################################################################################################
 
 class PageTwo(tk.Frame):                                #f3
-    def __init__(self, master, filepath, v, v_2, pp_filename):
+    def __init__(self, master, filepath, v, v_2, pp_filename, corr_data):
         tk.Frame.__init__(self, master)
         
         self.filepath = filepath
@@ -391,6 +408,8 @@ class PageTwo(tk.Frame):                                #f3
         print ("3 " + self.pp_filename)
         self.graph_switch(self.pp_filename)
         
+        self.corr_data = corr_data
+        
         
         list_1 = [ "Number of Features - Number of Features", "Number of Features - Average Area", "Number of Features - Average Red", "Number of Features - Average Green", "Number of Features - Average Blue", "Number of Features - Average Luminosity", "Average Area - Number of features", "Average Area - Average Area", "Average Area - Average Red", "Average Area - Average Green", "Average Area - Average Blue", "Average Area - Average Luminosity", "Average Red - Number of features", "Average Red - Average Area", "Average Red - Average Red", "Average Red - Average Green", "Average Red - Average Blue", "Average Red - Average Luminosity", "Average Green - Number of features", "Average Green - Average Area", "Average Green - Average Red", "Average Green - Average Green", "Average Green - Average Blue", "Average Green - Average Luminosity", "Average Blue - Number of features", "Average Blue - Average Area", "Average Blue - Average Red", "Average Blue - Average Green", "Average Blue - Average Blue", "Average Blue - Average Luminosity", "Average Luminosity - Number of features", "Average Luminosity - Average Area", "Average Luminosity - Average Red", "Average Luminosity - Average Green", "Average Luminosity - Average Blue", "Average Luminosity - Average Luminosity"]
         self.feature = tk.OptionMenu(self, self.vSV, *list_1)
@@ -402,7 +421,8 @@ class PageTwo(tk.Frame):                                #f3
         self.displaylabel(self.v_2SV)
 
         
-        self.text = tk.Label(self, height = 7, width = 67, bg = 'gray85', text = "Correlative Data (Statistics)",font=("Helvetica", 16, "bold"))
+        self.text = tk.Label(self, bg = 'gray85', text = "Correlative Data (Statistics): \n" + self.corr_data.get(),font=("Helvetica", 16, "bold"))
+        self.text.config(wraplength = 800)
         self.text.grid(row = 102, column = 2, padx = 5, pady = 5)
         
         self.image = tk.Button(self, text = "Image", command = self.image_switch, height = 2, width = 8)#button for swithing to image
@@ -411,15 +431,15 @@ class PageTwo(tk.Frame):                                #f3
         self.graph = tk.Button(self, text = "Graph", command = lambda: self.graph_switch(self.pp_filename), height = 2, width = 8)#button for swithing to plot
         self.graph.grid(row = 51, column = 3, padx = 5, pady = 5, columnspan = 2) 
         
-        self.back = tk.Button(self, text = "Back", command = lambda:master.switch_frame(PageOne, self.filepath, self.v, self.v_2, self.pp_filename) , height = 2, width = 8)
+        self.back = tk.Button(self, text = "Back", command = lambda:master.switch_frame(PageOne, self.filepath, self.v, self.v_2, self.pp_filename, self.corr_data) , height = 2, width = 8)
         self.back.grid(row = 100, column = 3, padx = 5, pady = 5, columnspan = 2)
 
         
     def image_switch(self):#swith to image
         self.image_2 = Image.open(self.filepath)
-        self.image_2 = self.image_2.resize((600, 600), Image.ANTIALIAS)
+        self.image_2 = self.image_2.resize((800, 800), Image.ANTIALIAS)
         self.photo_2 = ImageTk.PhotoImage(self.image_2)
-        self.image_display = tk.Label(self, image = self.photo_2, width = 600, height = 600, bg = 'gray85')
+        self.image_display = tk.Label(self, image = self.photo_2, width = 800, height = 800, bg = 'gray85')
         self.image_display.image = self.photo_2
         self.image_display.grid(row = 1, column = 2, padx = 5, pady = 5, rowspan = 100)
         return
