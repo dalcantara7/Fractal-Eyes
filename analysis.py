@@ -6,6 +6,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import CNNPredicter as cnn
 import mutual_information as mi
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 num_samples = 365 #for two class problem
 num_samples_four_class = 619
@@ -208,7 +210,7 @@ def single_image_analysis_four_class(filename): #comments here are the same as t
 
     nle = natural_language_explanation(top_n_features, mi_features_list, top_feat_pairs, feature_names, class_labels, class_label, 5)
 
-    return nle
+    return nle #returned to GUI to display on GUI
 
 def sort_mi(mi_matrix, n): #sorts mutual information scores for class label
     top_n = sorted(range(len(mi_matrix)), key=lambda i: mi_matrix[i], reverse=True)[:int(n)]
@@ -237,7 +239,7 @@ def takeSecond(elem): #function used in sort_mi_feats above
 def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pairs, feat_names, class_labels, class_label, num_pairs): #generates natural language explanation for GUI and saved report (should be expanded upon)
     data_str = list()
 
-    # print("The image is a", class_labels[class_label], "\n\nFeature most relevant to class:")
+    #formatting data string into a list in order to build string that will be displayed in GUI
     data_str.append(("The image is a " + str(class_labels[class_label]) + "\n\nFeature most relevant to class:\n"))
     for i in range(0, len(top_feats)):
         data_str.append((str(i+1) + " - " + str(feat_names[top_feats[i]]) + " with mutual information score: " + str(mi_feat_for_class_label[i]) + "\n"))
@@ -252,7 +254,6 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
     for i in range(0, len(data_str)):
         final_str+= data_str[i]
 
-    # print(final_str)
     return final_str
 
 
