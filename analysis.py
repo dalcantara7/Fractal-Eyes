@@ -177,7 +177,6 @@ def single_image_analysis(filename):
 
 def single_image_analysis_four_class(filename): #comments here are the same as the above function but the funciton restructured for more classes (first conditional is also removed since the blob analysis is the same for all for classes)
     class_label = cnn.predicter(filename)
-    # class_label = 3
     num_blobs, avg_area = fe.find_blob_feats(filename, False)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
@@ -257,13 +256,6 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
         final_str+= data_str[i]
 
     return final_str
-
-def save_analysis(filepath, text):
-    text_file = open(filepath + "analysis.txt", "w")
-    text_file.write(text)
-    text_file.close
-
-
 
 # all_image_analysis_four_class()
 # plot_data()
