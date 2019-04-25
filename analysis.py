@@ -150,7 +150,7 @@ def single_image_analysis(filename):
     feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
 
     data = np.loadtxt("excel_files/full_image_set_analysis.csv", delimiter = ',') 
-    dataframe = pd.DataFrame(data, columns=["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminance", "Class"])
+    dataframe = pd.DataFrame(data, columns=["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminosity", "Class"])
 
     mi_features_list = list()
     feature_names = list(dataframe)
@@ -187,10 +187,10 @@ def single_image_analysis_four_class(filename): #comments here are the same as t
     pp.indiv_pair_plot_four_class(data_array)
 
     class_labels = ["Eosinophil", "Lymphocyte", "Monoctye", "Neutrophil"]
-    feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminance", "Class"]
+    feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminosity", "Class"]
 
     data = np.loadtxt("excel_files/full_image_set_analysis_four_class.csv", delimiter = ',') 
-    dataframe = pd.DataFrame(data, columns=["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminance", "Class"])
+    dataframe = pd.DataFrame(data, columns=["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Luminosity", "Class"])
 
     mi_features_list = list()
     feature_names = list(dataframe)

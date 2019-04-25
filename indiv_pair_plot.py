@@ -14,7 +14,7 @@ def indiv_pair_plot(analyzed_image_data):
     data = np.asarray(data)
 
     #declares columns, colors, and labels to be used 
-    columns = ["Number of Blobs", "Average Area of Blob", "Average Red", "Average Green", "Average Blue", "Average Lumosity", "Class"]
+    columns = ["Number of Blobs", "Average Area of Blob", "Average Red", "Average Green", "Average Blue", "Average Luminosity", "Class"]
     colors = ['red', 'green', 'blue'] #mapping of colors is as follows: [0]->White Blood Cell [1]->Analyzed Image [2]->U2OS
     labels = ['White Blood Cell', 'U2OS Cell', 'Analyzed Image']
 
@@ -149,7 +149,7 @@ def indiv_pair_plot_four_class(analyzed_image_data): #comments here are the same
     data.append(analyzed_image_data)
     data = np.asarray(data)
 
-    columns = ["Number of Blobs", "Average Area of Blob", "Average Red", "Average Green", "Average Blue", "Average Lumosity", "Class"]
+    columns = ["Number of Blobs", "Average Area of Blob", "Average Red", "Average Green", "Average Blue", "Average Luminosity", "Class"]
     colors = ['red', 'green', 'blue', 'purple', 'yellow'] #mapping of colors is as follows: [0]->Eosinophil [1]->Lymphocyte [2]->Monocyte [3]->Neutrophil [4]->Analyzed Image
     labels = ['Eosinophil', 'Lymphocyte', 'Monocyte', 'Neutrophil', 'Analyzed Image']
 
