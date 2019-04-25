@@ -437,18 +437,18 @@ class PageTwo(tk.Frame):                                #f3
         
     def image_switch(self):#swith to image
         self.image_2 = Image.open(self.filepath)
-        self.image_2 = self.image_2.resize((800, 800), Image.ANTIALIAS)
+        self.image_2 = self.image_2.resize((600, 600), Image.ANTIALIAS)
         self.photo_2 = ImageTk.PhotoImage(self.image_2)
-        self.image_display = tk.Label(self, image = self.photo_2, width = 800, height = 800, bg = 'gray85')
+        self.image_display = tk.Label(self, image = self.photo_2, width = 600, height = 600, bg = 'gray85')
         self.image_display.image = self.photo_2
         self.image_display.grid(row = 1, column = 2, padx = 5, pady = 5, rowspan = 100)
         return
     
     def graph_switch(self, filename):#swith to graph
         self.image_2 = Image.open(filename)
-        self.image_2 = self.image_2.resize((800, 800), Image.ANTIALIAS)
+        self.image_2 = self.image_2.resize((600, 600), Image.ANTIALIAS)
         self.photo_2 = ImageTk.PhotoImage(self.image_2)
-        self.image_display = tk.Label(self, image = self.photo_2, width = 800, height = 800, bg = 'gray85')
+        self.image_display = tk.Label(self, image = self.photo_2, width = 600, height = 600, bg = 'gray85')
         self.image_display.image = self.photo_2
         self.image_display.grid(row = 1, column = 2, padx = 5, pady = 5, rowspan = 100)
         return
