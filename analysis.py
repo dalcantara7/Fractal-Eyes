@@ -263,4 +263,4 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
 # mutual_information()
 # single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/NEUTROPHIL/300.jpg")
 # single_image_analysis("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
-# single_image_analysis("human_cell_dataset/2604.jpg")
+# single_image_analysis("Blue (1).jpg")

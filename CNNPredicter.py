@@ -26,7 +26,7 @@ for example filepath = r'C:\x86\Hello.jpg'
 """
 def predicter(filepath):
 
-    model = load_model('TwoClass.model')
+    model = load_model('ECE498B.model')
     image_test = load_img(filepath, target_size = (150,150))
     image_test_array = img_to_array(image_test)
     image_test_array = np.expand_dims(image_test_array,axis=0)
