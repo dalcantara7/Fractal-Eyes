@@ -147,7 +147,7 @@ def single_image_analysis(filename):
     pp.indiv_pair_plot(data_array)
 
     #set up labels
-    class_labels = ["U2OS Cell", "White Blood Cell"]
+    class_labels = ["White Blood Cell", "U2OS Cell"]
     feature_names = ["Number of Features", "Average Area", "Average Red", "Average Green", "Average Blue", "Average Lum", "Class"]
 
     data = np.loadtxt("excel_files/full_image_set_analysis.csv", delimiter = ',') 
