@@ -50,6 +50,7 @@ class StartPage(tk.Frame):
     def __init__(self, master, filepath, v, v_2, pp_filename, corr_data):
         tk.Frame.__init__(self, master)
         
+        self.master = master
         self.filepath = filepath
         self.v = v
         self.v_2 = v_2
@@ -131,7 +132,7 @@ class StartPage(tk.Frame):
         
         if self.filepath != ("images/Screen Shot 2019-02-04 at 11.54.25 AM.png"):
             self.pairplotspage()
-
+        self.pairplotspage()
     def startprocessing(self):
         self.startButtonFunc()
         """
@@ -153,21 +154,49 @@ class StartPage(tk.Frame):
         
         self.filepath = filepath
         top1 = tk.Toplevel()
-        top1.geometry('250x200')
+        #top1.geometry('250x240')
         
         self.filepathvar = tk.StringVar()
         self.filepathvar.set(self.filepath)
         
+        self.frame_canvas = tk.Frame(top1)
+        self.frame_canvas.grid(row=1, column=0, pady=(5, 0), sticky='nw')
+        self.frame_canvas.grid_rowconfigure(0, weight=1)
+        self.frame_canvas.grid_columnconfigure(0, weight=1)
+        self.frame_canvas.grid_propagate(False)
+        
+        # Add a canvas in that frame
+        self.canvas = tk.Canvas(self.frame_canvas, bg="white")
+        self.canvas.grid(row=0, column=0, sticky="news")
+        
+        # Link a scrollbar to the canvas
+        self.vsb = tk.Scrollbar(self.frame_canvas, orient="vertical", command=self.canvas.yview)
+        self.vsb.grid(row = 0, column=1, sticky='ns')
+        self.canvas.configure(yscrollcommand=self.vsb.set)
+        
+        self.frame_buttons = tk.Frame(self.canvas, bg="white")
+        self.canvas.create_window((0,0), window=self.frame_buttons, anchor='nw')
+        
+        self.frame_buttons.update_idletasks()
+
+        self.frame_canvas.config(width= 100, height= 100)
+        self.frame_canvas.bind('<Configure>')
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        
+        #labels for feature name
         self.titleLabel = tk.Label(top1, text = "Import Image Tool", pady = 10, font=("Arial", 20,"bold"))
         self.titleLabel.grid(row = 0, column = 0, columnspan = 3, sticky = "w"+"e")
             
-        self.filepathLabel = tk.Label(top1, text = "File Path: " + self.filepathvar.get())
-        self.filepathLabel.grid(row = 1, pady = 0, columnspan = 3)
-        self.filepathLabel.config(wraplength = 250, pady = 20)
-            
-        self.rightslection = tk.Button(top1, text = "Import Image", command = lambda: [self.browse(self.filepath),top1.destroy()])
-        self.rightslection.grid(row = 2, column = 0, columnspan = 3)
+        self.filepathLabel = tk.Label(self.frame_buttons, text = "File Path: " + self.filepathvar.get())
+        self.filepathLabel.grid(row = 0)
+        self.filepathLabel.config(wraplength = 240)
 
+        self.rightslection = tk.Button(top1, text = "Import Image", command = lambda: [self.browse(self.filepath),top1.destroy()])
+        self.rightslection.grid(row = 3, column = 0)
+
+        self.frame_canvas.config(width= 250, height= 75)
+        self.frame_canvas.bind('<Configure>')
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
         
     def typeofanalysisFUNC (self):
         
@@ -192,7 +221,6 @@ class StartPage(tk.Frame):
         self.filepathLabel = tk.Label(top1, text = "There are two image data sets that can be used in analysis. Our neural network has been trained to classify your image given that you provide the type of image it is. Please select either the U2OS button or the Leukocyte button prior to initiating analysis.")
         self.filepathLabel.grid(row = 1, pady = 0, columnspan = 3)
         self.filepathLabel.config(wraplength = 250, anchor = "w")
-
 
     def browse(self, filepath):
         self.filepath = filepath
@@ -290,7 +318,7 @@ class PageOne(tk.Frame):                                #f2
         self.vsb.grid(row = 0, column=1, sticky='ns')
         self.canvas.configure(yscrollcommand=self.vsb.set)
         self.hor = tk.Scrollbar(self.frame_canvas, orient = "horizontal", command = self.canvas.xview)
-        self.hor.grid(row = 1, column = 0, columnspan = 2)
+        self.hor.grid(row = 1, column = 0, sticky='we')
         self.canvas.configure(xscrollcommand=self.hor.set)
         
         self.frame_buttons = tk.Frame(self.canvas, bg="white")
@@ -301,9 +329,9 @@ class PageOne(tk.Frame):                                #f2
             for j in range(6):
                 self.gen_filename = "pair_plots/" + str(i+1) + "_" + str(j+1) + ".png"
                 self.image_1 = Image.open(self.gen_filename)
-                self.image_1 = self.image_1.resize((250, 250), Image.ANTIALIAS)
+                self.image_1 = self.image_1.resize((200, 200), Image.ANTIALIAS)
                 self.photo_1 = ImageTk.PhotoImage(self.image_1)
-                self.buttons[i][j] = tk.Button(self.frame_buttons, command = lambda i=i, j=j: self.show_filename(i,j), image = self.photo_1, height = 250, width = 250)
+                self.buttons[i][j] = tk.Button(self.frame_buttons, command = lambda i=i, j=j: self.show_filename(i,j), image = self.photo_1, height = 200, width = 200)
                 self.buttons[i][j].image = self.photo_1
                 self.buttons[i][j].grid(row = i+1, column = j+1, padx = 5, pady = 5)
                 
@@ -410,6 +438,26 @@ class PageTwo(tk.Frame):                                #f3
         
         self.corr_data = corr_data
         
+        self.frame_canvas = tk.Frame(self)
+        self.frame_canvas.grid(row=101, column=2, pady=(0, 2), sticky='nw', rowspan = 2)
+        self.frame_canvas.grid_rowconfigure(0, weight=1)
+        self.frame_canvas.grid_columnconfigure(0, weight=1)
+        self.frame_canvas.grid_propagate(False)
+        
+        # Add a canvas in that frame
+        self.canvas = tk.Canvas(self.frame_canvas, bg="white")
+        self.canvas.grid(row=0, column=0, sticky="news")
+        
+        # Link a scrollbar to the canvas
+        self.vsb = tk.Scrollbar(self.frame_canvas, orient="vertical", command=self.canvas.yview)
+        self.vsb.grid(row = 0, column=1, sticky='ns')
+        self.canvas.configure(yscrollcommand=self.vsb.set)
+        
+        self.frame_buttons = tk.Frame(self.canvas, bg="white")
+        self.canvas.create_window((0,0), window=self.frame_buttons, anchor='nw')
+
+        self.frame_canvas.config(width= 610, height= 150)
+        
         
         list_1 = [ "Number of Features - Number of Features", "Number of Features - Average Area", "Number of Features - Average Red", "Number of Features - Average Green", "Number of Features - Average Blue", "Number of Features - Average Luminosity", "Average Area - Number of features", "Average Area - Average Area", "Average Area - Average Red", "Average Area - Average Green", "Average Area - Average Blue", "Average Area - Average Luminosity", "Average Red - Number of features", "Average Red - Average Area", "Average Red - Average Red", "Average Red - Average Green", "Average Red - Average Blue", "Average Red - Average Luminosity", "Average Green - Number of features", "Average Green - Average Area", "Average Green - Average Red", "Average Green - Average Green", "Average Green - Average Blue", "Average Green - Average Luminosity", "Average Blue - Number of features", "Average Blue - Average Area", "Average Blue - Average Red", "Average Blue - Average Green", "Average Blue - Average Blue", "Average Blue - Average Luminosity", "Average Luminosity - Number of features", "Average Luminosity - Average Area", "Average Luminosity - Average Red", "Average Luminosity - Average Green", "Average Luminosity - Average Blue", "Average Luminosity - Average Luminosity"]
         self.feature = tk.OptionMenu(self, self.vSV, *list_1)
@@ -421,9 +469,9 @@ class PageTwo(tk.Frame):                                #f3
         self.displaylabel(self.v_2SV)
 
         
-        self.text = tk.Label(self, bg = 'gray85', text = "Correlative Data (Statistics): \n" + self.corr_data.get(),font=("Helvetica", 16, "bold"))
-        self.text.config(wraplength = 800)
-        self.text.grid(row = 102, column = 2, padx = 5, pady = 5)
+        self.text = tk.Label(self.frame_buttons, bg = 'gray85', text = "Correlative Data (Statistics): \n" + self.corr_data.get(),font=("Arial", 13),  justify="left")
+        self.text.config(wraplength = 600)
+        self.text.grid(row = 0, column = 0, padx = 5, pady = 5)
         
         self.image = tk.Button(self, text = "Image", command = self.image_switch, height = 2, width = 8)#button for swithing to image
         self.image.grid(row = 50, column = 3, padx = 5, pady = 5, columnspan = 2)
@@ -434,6 +482,7 @@ class PageTwo(tk.Frame):                                #f3
         self.back = tk.Button(self, text = "Back", command = lambda:master.switch_frame(PageOne, self.filepath, self.v, self.v_2, self.pp_filename, self.corr_data) , height = 2, width = 8)
         self.back.grid(row = 100, column = 3, padx = 5, pady = 5, columnspan = 2)
 
+        self.frame_canvas.bind('<Configure>', self.update_scrollregion)
         
     def image_switch(self):#swith to image
         self.image_2 = Image.open(self.filepath)
@@ -548,7 +597,10 @@ class PageTwo(tk.Frame):                                #f3
         self.imageshown = tk.Label(self, image=self.photoImg)
         self.imageshown.config(padx = 42, pady = 10)
         self.imageshown.photo = self.photoImg
-        self.imageshown.grid(row = 102, column = 3, columnspan = 2)
+        self.imageshown.grid(row = 101, column = 3, columnspan = 2)
+    
+    def update_scrollregion(self):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
 ################################################################################################################################################################
 ################################################################################################################################################################
