@@ -132,7 +132,7 @@ class StartPage(tk.Frame):
         
         if self.filepath != ("images/Screen Shot 2019-02-04 at 11.54.25 AM.png"):
             self.pairplotspage()
-        self.pairplotspage()
+            
     def startprocessing(self):
         self.startButtonFunc()
         """
