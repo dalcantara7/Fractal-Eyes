@@ -130,6 +130,7 @@ def all_image_analysis_four_class(): #comments here are the same as the above fu
 
 def single_image_analysis(filename):
     class_label = cnn.predicter(filename) #gets class label
+    print(class_label)
     
     #conditional for applying correct blob parameters
     if(class_label == 0): 
@@ -176,7 +177,7 @@ def single_image_analysis(filename):
     return nle
 
 def single_image_analysis_four_class(filename): #comments here are the same as the above function but the funciton restructured for more classes (first conditional is also removed since the blob analysis is the same for all for classes)
-    class_label = cnn.predicter(filename)
+    class_label = cnn.predicter_four_class(filename)
     num_blobs, avg_area = fe.find_blob_feats(filename, False)
     avg_color = fe.color_avg(filename)
     lum_avg = fe.lum_avg(filename)
@@ -260,5 +261,6 @@ def natural_language_explanation(top_feats, mi_feat_for_class_label, top_feat_pa
 # all_image_analysis_four_class()
 # plot_data()
 # mutual_information()
-# single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
+# single_image_analysis_four_class("white_blood_cell_by_class/images/TEST/NEUTROPHIL/300.jpg")
 # single_image_analysis("white_blood_cell_by_class/images/TEST/LYMPHOCYTE/300.jpg")
+# single_image_analysis("Blue (1).jpg")
