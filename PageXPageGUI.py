@@ -128,7 +128,7 @@ class StartPage(tk.Frame):
         self.bytes = 0
         self.maxbytes = 0
         
-        print (self.radio_button_var.get())
+        # print (self.radio_button_var.get())
         
         if self.filepath != ("images/Screen Shot 2019-02-04 at 11.54.25 AM.png"):
             self.pairplotspage()
@@ -245,7 +245,7 @@ class StartPage(tk.Frame):
         self.imageshown.grid(row = 3, column = 0, columnspan = 6, rowspan = 50)
       
     def startButtonFunc(self):
-        print("Start Clicking Working")
+        # print("Start Clicking Working")
         if self.radio_button_var.get() == 1:
             #print ("U20S")
             self.corr_data.set(an.single_image_analysis(self.filepath))
@@ -263,10 +263,10 @@ class StartPage(tk.Frame):
             self.gopage2.grid(row = 24, column = 7, columnspan = 2)
             
     def stopButtonFunc(self):
-        print("Stop Clicking Working")
+        # print("Stop Clicking Working")
         self.progress.stop()
     def saveButtonFunc(self):
-        print("Save Clicking Working")
+        # print("Save Clicking Working")
         self.save_filepath = tk.filedialog.asksaveasfile(mode='w', defaultextension=".txt")
         self.text2save = str(self.corr_data.get()) # starts from `1.0`, not `0.0`
         self.save_filepath.write(self.text2save)
@@ -336,7 +336,7 @@ class PageOne(tk.Frame):                                #f2
                 self.buttons[i][j].grid(row = i+1, column = j+1, padx = 5, pady = 5)
                 
          #labels for feature name
-        self.label_1 = tk.Label(self.frame_buttons, text = "Number of Features")
+        self.label_1 = tk.Label(self.frame_buttons, text = "Number of Blobs")
         self.label_1.grid(row = 0, column = 1, padx = 5, pady = 5)
         self.label_2 = tk.Label(self.frame_buttons, text = "Average Area")
         self.label_2.grid(row = 0, column = 2, padx = 5, pady = 5)
@@ -348,7 +348,7 @@ class PageOne(tk.Frame):                                #f2
         self.label_5.grid(row = 0, column = 5, padx = 5, pady = 5)
         self.label_6 = tk.Label(self.frame_buttons, text = "Average Luminosity")
         self.label_6.grid(row = 0, column = 6, padx = 5, pady = 5)
-        self.label_7 = tk.Label(self.frame_buttons, text = "Number of Features")
+        self.label_7 = tk.Label(self.frame_buttons, text = "Number of Blobs")
         self.label_7.grid(row = 1, column = 0, padx = 5, pady = 5)
         self.label_8 = tk.Label(self.frame_buttons, text = "Average Area")
         self.label_8.grid(row = 2, column = 0, padx = 5, pady = 5)
@@ -377,7 +377,7 @@ class PageOne(tk.Frame):                                #f2
         text_2 = ""
         text_3 = ""
         if i == 0:
-            text_2 = "Number of Features"
+            text_2 = "Number of Blobs"
         elif i == 1:
             text_2 = "Average Area"
         elif i == 2:
@@ -389,7 +389,7 @@ class PageOne(tk.Frame):                                #f2
         else:
             text_2 = "Average Luminosity"
         if j == 0:
-            text_3 = "Number of Features"
+            text_3 = "Number of Blobs"
         elif j == 1:
             text_3 = "Average Area"
         elif j == 2:
@@ -432,8 +432,8 @@ class PageTwo(tk.Frame):                                #f3
         self.buildimage(self.UAlogo)
         
         #FILENAME 2 IS THE IMPORTANT PAIR PLOTS PATH
-        print (self.v_2)
-        print ("3 " + self.pp_filename)
+        # print (self.v_2)
+        # print ("3 " + self.pp_filename)
         self.graph_switch(self.pp_filename)
         
         self.corr_data = corr_data
@@ -459,7 +459,7 @@ class PageTwo(tk.Frame):                                #f3
         self.frame_canvas.config(width= 610, height= 150)
         
         
-        list_1 = [ "Number of Features - Number of Features", "Number of Features - Average Area", "Number of Features - Average Red", "Number of Features - Average Green", "Number of Features - Average Blue", "Number of Features - Average Luminosity", "Average Area - Number of features", "Average Area - Average Area", "Average Area - Average Red", "Average Area - Average Green", "Average Area - Average Blue", "Average Area - Average Luminosity", "Average Red - Number of features", "Average Red - Average Area", "Average Red - Average Red", "Average Red - Average Green", "Average Red - Average Blue", "Average Red - Average Luminosity", "Average Green - Number of features", "Average Green - Average Area", "Average Green - Average Red", "Average Green - Average Green", "Average Green - Average Blue", "Average Green - Average Luminosity", "Average Blue - Number of features", "Average Blue - Average Area", "Average Blue - Average Red", "Average Blue - Average Green", "Average Blue - Average Blue", "Average Blue - Average Luminosity", "Average Luminosity - Number of features", "Average Luminosity - Average Area", "Average Luminosity - Average Red", "Average Luminosity - Average Green", "Average Luminosity - Average Blue", "Average Luminosity - Average Luminosity"]
+        list_1 = [ "Number of Blobs - Number of Blobs", "Number of Blobs - Average Area", "Number of Blobs - Average Red", "Number of Blobs - Average Green", "Number of Blobs - Average Blue", "Number of Blobs - Average Luminosity", "Average Area - Number of Blobs", "Average Area - Average Area", "Average Area - Average Red", "Average Area - Average Green", "Average Area - Average Blue", "Average Area - Average Luminosity", "Average Red - Number of Blobs", "Average Red - Average Area", "Average Red - Average Red", "Average Red - Average Green", "Average Red - Average Blue", "Average Red - Average Luminosity", "Average Green - Number of Blobs", "Average Green - Average Area", "Average Green - Average Red", "Average Green - Average Green", "Average Green - Average Blue", "Average Green - Average Luminosity", "Average Blue - Number of Blobs", "Average Blue - Average Area", "Average Blue - Average Red", "Average Blue - Average Green", "Average Blue - Average Blue", "Average Blue - Average Luminosity", "Average Luminosity - Number of Blobs", "Average Luminosity - Average Area", "Average Luminosity - Average Red", "Average Luminosity - Average Green", "Average Luminosity - Average Blue", "Average Luminosity - Average Luminosity"]
         self.feature = tk.OptionMenu(self, self.vSV, *list_1)
         self.feature.grid(row = 3, column = 3, padx = 5, pady = 5, columnspan = 1)
         self.feature_analysis_select = self.image = tk.Button(self, text = "Select", command = lambda: self.new_feature_analysis(self.vSV))
@@ -507,19 +507,19 @@ class PageTwo(tk.Frame):                                #f3
         self.feature_selected_SV = v
         self.feature_selected = self.feature_selected_SV.get()
 
-        if self.feature_selected == "Number of Features - Number of Features":
+        if self.feature_selected == "Number of Blobs - Number of Blobs":
             self.pp_shown = "1_1.png"
-        elif self.feature_selected == "Number of Features - Average Area":
+        elif self.feature_selected == "Number of Blobs - Average Area":
             self.pp_shown = "1_2.png"
-        elif self.feature_selected == "Number of Features - Average Red":
+        elif self.feature_selected == "Number of Blobs - Average Red":
             self.pp_shown = "1_3.png"
-        elif self.feature_selected == "Number of Features - Average Green":
+        elif self.feature_selected == "Number of Blobs - Average Green":
             self.pp_shown = "1_4.png"
-        elif self.feature_selected == "Number of Features - Average Blue":
+        elif self.feature_selected == "Number of Blobs - Average Blue":
             self.pp_shown = "1_5.png"     
-        elif self.feature_selected == "Number of Features - Average Luminosity":
+        elif self.feature_selected == "Number of Blobs - Average Luminosity":
             self.pp_shown = "1_6.png"
-        elif self.feature_selected == "Average Area - Number of Features":
+        elif self.feature_selected == "Average Area - Number of Blobs":
             self.pp_shown = "2_1.png"
         elif self.feature_selected == "Average Area - Average Area":
             self.pp_shown = "2_2.png"
@@ -531,7 +531,7 @@ class PageTwo(tk.Frame):                                #f3
             self.pp_shown = "2_5.png"
         elif self.feature_selected == "Average Area - Average Luminosity":
             self.pp_shown = "2_6.png"
-        elif self.feature_selected == "Average Red - Number of Features":
+        elif self.feature_selected == "Average Red - Number of Blobs":
             self.pp_shown = "3_1.png"
         elif self.feature_selected == "Average Red - Average Area":
             self.pp_shown = "3_2.png"
@@ -543,7 +543,7 @@ class PageTwo(tk.Frame):                                #f3
             self.pp_shown = "3_5.png"
         elif self.feature_selected == "Average Red - Average Luminosity":
             self.pp_shown = "3_6.png"
-        elif self.feature_selected == "Average Green - Number of Features":
+        elif self.feature_selected == "Average Green - Number of Blobs":
             self.pp_shown = "4_1.png"
         elif self.feature_selected == "Average Green - Average Area":
             self.pp_shown = "4_2.png"
@@ -555,7 +555,7 @@ class PageTwo(tk.Frame):                                #f3
             self.pp_shown = "4_5.png"
         elif self.feature_selected == "Average Green - Average Luminosity":
             self.pp_shown = "4_6.png"
-        elif self.feature_selected == "Average Blue - Number of Features":
+        elif self.feature_selected == "Average Blue - Number of Blobs":
             self.pp_shown = "5_1.png"
         elif self.feature_selected == "Average Blue - Average Area":
             self.pp_shown = "5_2.png"
@@ -567,7 +567,7 @@ class PageTwo(tk.Frame):                                #f3
             self.pp_shown = "5_5.png"
         elif self.feature_selected == "Average Blue - Average Luminosity":
             self.pp_shown = "5_6.png"
-        elif self.feature_selected == "Average Luminosity - Number of Features":
+        elif self.feature_selected == "Average Luminosity - Number of Blobs":
             self.pp_shown = "6_1.png"
         elif self.feature_selected == "Average Luminosity - Average Area":
             self.pp_shown = "6_2.png"

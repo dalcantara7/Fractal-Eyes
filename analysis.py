@@ -130,7 +130,7 @@ def all_image_analysis_four_class(): #comments here are the same as the above fu
 
 def single_image_analysis(filename):
     class_label = cnn.predicter(filename) #gets class label
-    print(class_label)
+    # print(class_label)
     
     #conditional for applying correct blob parameters
     if(class_label == 0): 
@@ -200,6 +200,7 @@ def single_image_analysis_four_class(filename): #comments here are the same as t
     mi_features_list = mi_features_list.tolist()
 
     top_n_features = sort_mi(mi_features_list, 3)
+    # top_n_features = sorted()
 
     for i in feature_names:
         mi_features_list.append(mi.mutualInformationFeatures(dataframe, i, "Class"))
