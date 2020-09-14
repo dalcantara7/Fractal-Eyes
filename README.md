@@ -1,1 +1,9 @@
-# Fractal-Eyes
+# Fractal Eyes
+
+This project was the completed as part of the 2018-2019 Senior Design process at the University of Arizona. The goal of this project was to use machine learning to differentiate between different types of blood cells and quantify differences in features.
+
+A condensed research paper-formatted explanation of the system is available here[]
+
+The full thesis paper submitted at the end of project is available here[]
+
+__Note: in an effort to make this project more organized I have redone the file structure. The references to dependent files need to be updated. The project will not run in it's current form. However enough explanation and imagery is given between the papers in this GitHub to get the idea.__
