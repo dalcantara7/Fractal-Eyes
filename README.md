@@ -4,9 +4,9 @@
 
 This project was the completed as part of the graduate requirement for _Engineering Applications of Machine Learning_ as well as my __senior Honors Thesis__ at the University of Arizona. The goal of this project was to use machine learning to differentiate between different types of blood cells and quantify differences in features.
 
-The full version of the research paper-formatted explanation of the system is available [here](https://github.com/dalcantara7/Fractal-Eyes/blob/master/Fractal%20Eyes%20Condensed%20Paper.pdf)
+The full version of the research paper formatted explanation of the system is available [here](https://github.com/dalcantara7/Fractal-Eyes/blob/master/Fractal%20Eyes%20Condensed%20Paper.pdf)
 
-The full honors thesis paper is available [here](https://github.com/dalcantara7/Fractal-Eyes/blob/master/Fractal%20Eyes%20Full%20Thesis.pdf)  
+The full honors thesis form of the paper is available [here](https://github.com/dalcantara7/Fractal-Eyes/blob/master/Fractal%20Eyes%20Full%20Thesis.pdf)  
 
 ## Model Architecture
 ![model architecture](https://github.com/dalcantara7/Fractal-Eyes/blob/master/Images/model%20architecture.png)
